@@ -2,7 +2,7 @@
 
 /* Hero Section */
 .heroBanner {
-  padding: 4rem 0;
+  padding: var(--ifm-spacing-vertical) 0; /* Use Docusaurus spacing variable */
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -12,7 +12,7 @@
 
 @media screen and (max-width: 996px) {
   .heroBanner {
-    padding: 2rem;
+    padding: var(--ifm-spacing-vertical) 0.5rem;
   }
 }
 
@@ -30,22 +30,22 @@
   color: var(--ifm-font-color-secondary);
   font-size: 1.25rem;
   max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 2rem;
+  margin: 0 auto 2rem auto; /* Center subtitle */
 }
 
 .heroBanner .buttons {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.5rem; /* Increased gap for modern feel */
+  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
 }
 
 /* CTA Section */
 .ctaSection {
-  padding: 4rem 0;
+  padding: var(--ifm-spacing-vertical) 0;
   background-color: var(--ifm-color-primary-dark);
   color: var(--ifm-color-on-primary);
+  text-align: center; /* Ensure text is centered */
 }
 
 .ctaSection .hero__title {
@@ -56,16 +56,15 @@
 .ctaSection .hero__subtitle {
   color: var(--ifm-color-on-primary-dark);
   max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 2rem;
+  margin: 0 auto 2rem auto; /* Center subtitle */
 }
 
 /* Roadmap Section */
 .roadmapSection {
-  padding: 4rem 0;
+  padding: var(--ifm-spacing-vertical) 0;
   background-color: var(--ifm-background-color);
   color: var(--ifm-font-color-base);
+  text-align: center;
 }
 
 .roadmapSection .hero__title {
@@ -80,15 +79,14 @@
 .roadmapSection .hero__subtitle {
   color: var(--ifm-font-color-secondary);
   max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 3rem;
+  margin: 0 auto 3rem auto; /* Center subtitle */
 }
 
 .roadmapVisual {
-  margin-bottom: 3rem;
+  margin: 0 auto 3rem auto; /* Center and provide space */
   max-width: 100%;
   height: auto;
+  display: block; /* Ensure it behaves as a block element for margin:auto */
 }
 
 .roadmapVisual img {
@@ -98,7 +96,7 @@
 
 /* About Section */
 .aboutSection {
-  padding: 4rem 0;
+  padding: var(--ifm-spacing-vertical) 0;
   background-color: var(--ifm-background-surface-color);
   color: var(--ifm-font-color-base);
 }
@@ -112,18 +110,25 @@
   color: var(--ifm-color-primary-darker);
 }
 
+.aboutSection .row {
+  align-items: center; /* Vertically align items in the row */
+}
+
 .aboutImage {
   max-width: 100%;
   height: auto;
   border-radius: var(--ifm-global-radius);
   box-shadow: var(--ifm-global-shadow-md);
+  display: block; /* Ensure it behaves as a block element */
+  margin: 0 auto; /* Center image if column is wider */
 }
 
 /* Modules Section */
 .modulesSection {
-  padding: 4rem 0;
+  padding: var(--ifm-spacing-vertical) 0;
   background-color: var(--ifm-color-primary-light);
   color: var(--ifm-color-on-primary);
+  text-align: center;
 }
 
 .modulesSection .hero__title {
@@ -134,9 +139,14 @@
 .modulesSection .hero__subtitle {
   color: var(--ifm-color-on-primary-dark);
   max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 3rem;
+  margin: 0 auto 3rem auto; /* Center subtitle */
+}
+
+.modulesSection .row {
+  display: flex; /* Ensure flex behavior */
+  flex-wrap: wrap; /* Allow cards to wrap */
+  justify-content: center; /* Center cards if not full width */
+  gap: var(--ifm-spacing-horizontal); /* Consistent gap between cards */
 }
 
 .moduleCard {
@@ -148,38 +158,81 @@
   color: var(--ifm-font-color-base);
   border-radius: var(--ifm-global-radius);
   box-shadow: var(--ifm-global-shadow-md);
-  margin-bottom: 1.5rem; /* Space between cards */
-  border: 1px solid var(--ifm-color-emphasis-200);
+  transition: all 0.3s ease-in-out;
+  flex: 1 1 calc(33% - var(--ifm-spacing-horizontal) * 2 / 3); /* Distribute cards */
+  max-width: 300px; /* Limit card width */
+}
+
+.moduleCard:hover {
+  box-shadow: var(--ifm-global-shadow-lg);
+  transform: translateY(-5px);
+}
+
+.moduleCard .card__header {
+  padding: 1rem;
+  background-color: var(--ifm-background-surface-color);
+  border-bottom: 1px solid var(--ifm-border-color);
+  border-top-left-radius: var(--ifm-global-radius);
+  border-top-right-radius: var(--ifm-global-radius);
 }
 
 .moduleCard .card__header h3 {
   font-size: 1.25rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
   color: var(--ifm-color-primary-darkest);
 }
 
 .moduleCard .card__body {
   flex-grow: 1; /* Allows body to expand and push footer down */
+  padding: 1rem;
+  text-align: left;
 }
 
 .moduleCard .card__body p {
   font-size: 0.95rem;
   color: var(--ifm-font-color-secondary);
+  margin-bottom: 0.5rem;
 }
 
 .moduleCard .card__footer {
-  padding-top: 1rem;
-  border-top: 1px solid var(--ifm-color-emphasis-200);
+  padding: 1rem;
+  border-top: 1px solid var(--ifm-border-color);
+  text-align: center;
 }
 
 /* Responsive Adjustments for Smaller Screens */
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: var(--ifm-spacing-vertical) 1rem; /* Adjust padding for medium screens */
+  }
+  .heroBanner .hero__title {
+    font-size: 2.5rem;
+  }
+  .heroBanner .hero__subtitle {
+    font-size: 1.1rem;
+  }
+  .heroBanner .buttons {
+    gap: 1rem;
+  }
+  .aboutSection .col--6 {
+    flex: 0 0 100%; /* Stack columns on smaller screens */
+    max-width: 100%;
+  }
+  .aboutSection .col--6:first-child {
+    margin-bottom: 2rem;
+  }
+  .modulesSection .moduleCard {
+    flex: 1 1 calc(50% - var(--ifm-spacing-horizontal) / 2); /* Two cards per row */
+  }
+}
+
 @media screen and (max-width: 768px) {
   .heroBanner .hero__title {
-    font-size: 2.2rem;
+    font-size: 2rem;
   }
 
   .heroBanner .hero__subtitle {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .heroBanner .buttons {
@@ -191,11 +244,12 @@
   .roadmapSection,
   .aboutSection,
   .modulesSection {
-    padding: 2.5rem 0;
+    padding: var(--ifm-spacing-vertical) 0.5rem;
   }
 
-  .modulesSection .row {
-    flex-direction: column; /* Stack module cards vertically */
+  .modulesSection .moduleCard {
+    flex: 1 1 100%; /* Stack module cards vertically */
+    max-width: 100%;
   }
 
   .moduleCard {
@@ -203,18 +257,10 @@
   }
 
   .moduleCard .card__header h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .moduleCard .card__body p {
-    font-size: 0.9rem;
-  }
-
-  .aboutSection .col {
-    width: 100%; /* Make columns full width on small screens */
-  }
-
-  .aboutSection .col--6:first-child {
-    margin-bottom: 2rem; /* Add space between stacked columns */
+    font-size: 0.85rem;
   }
 }
