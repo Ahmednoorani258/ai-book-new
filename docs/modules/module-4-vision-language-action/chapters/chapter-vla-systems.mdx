@@ -1,0 +1,202 @@
+---
+title: Vision-Language-Action Systems
+description: This chapter introduces Vision-Language-Action (VLA) systems for intelligent robotics.
+keywords: ["VLA", "vision-language-action", "robotics", "AI", "LLM"]
+sidebar_label: VLA Systems
+sidebar_position: 1
+slug: /modules/vla/vla-systems
+---
+
+# Vision-Language-Action Systems
+
+## Learning Objectives
+
+By the end of this chapter, you should be able to:
+- Understand the core principles of Vision-Language-Action (VLA) systems.
+- Explain how large language models (LLMs) can be integrated into robotic control loops.
+- Explore methods for generating multi-step actions from high-level linguistic commands.
+
+## Introduction
+
+As robotics advances, the ability for robots to understand and act upon complex human instructions given in natural language becomes increasingly critical. **Vision-Language-Action (VLA) systems** represent a paradigm shift, enabling robots to bridge the gap between human intent (expressed through language) and physical execution (through actions), often guided by visual perception. This chapter delves into the architecture and components of VLA systems, demonstrating how modern AI, particularly Large Language Models (LLMs), can empower robots to perform intricate tasks by interpreting commands and planning sequences of actions in dynamic environments.
+
+## Key Concepts
+
+### Whisper -> Action: Voice Command to Robot Action
+
+One of the most intuitive forms of human-robot interaction is voice control. Integrating automatic speech recognition (ASR) systems with robot control allows users to issue commands naturally. NVIDIA Whisper, a highly accurate ASR model, can transcribe spoken language into text. In a VLA system, this transcribed text can then be processed to extract actionable commands for the robot.
+
+The "Whisper -> Action" pipeline involves:
+1.  **Speech Transcription**: ASR (e.g., Whisper) converts spoken commands into text.
+2.  **Natural Language Understanding (NLU)**: The text is parsed to understand the user's intent, identify relevant objects, and extract parameters (e.g., "pick up the **red block**," "move **forward two meters**").
+3.  **Action Mapping**: The understood intent is mapped to a set of robot-executable actions or API calls.
+
+This allows for a seamless transition from a human's verbal instruction to a robot's physical execution, making robots more accessible and easier to command in complex scenarios.
+
+<GlossaryTerm term="Vision-Language-Action (VLA) Systems" definition="Robotic systems that integrate visual perception, language understanding, and action generation to interpret and execute human commands." />
+
+<GlossaryTerm term="Automatic Speech Recognition (ASR)" definition="The process of converting spoken language into written text." />
+
+<GlossaryTerm term="Natural Language Understanding (NLU)" definition="A subfield of AI that focuses on enabling computers to understand human language, including intent and context." />
+
+### LLM Planning for ROS 2
+
+Large Language Models (LLMs) are revolutionizing AI with their impressive capabilities in understanding, generating, and reasoning with human language. In robotics, LLMs can serve as high-level planners, translating abstract natural language goals into concrete, executable sequences of ROS 2 actions.
+
+The process typically involves:
+1.  **Goal Interpretation**: An LLM receives a high-level goal (e.g., "make coffee," "clean the table").
+2.  **Task Decomposition**: The LLM breaks down the high-level goal into a series of sub-goals or primitive actions that the robot can perform (e.g., "go to coffee machine," "grab cup," "press button").
+3.  **ROS 2 Action Generation**: The LLM translates these primitive actions into ROS 2 service calls, topic publications, or action commands, which are then executed by the robot's lower-level control systems. The LLM can also dynamically query the robot's state via ROS 2 interfaces.
+4.  **Feedback and Replanning**: The LLM can receive feedback from the robot's execution and environmental sensors, allowing it to adapt its plan or correct errors in real-time.
+
+This approach significantly enhances the robot's autonomy and flexibility, enabling it to respond to a wider range of instructions and handle unexpected situations more gracefully.
+
+<CodeExample language="python"
+             explanation="A conceptual Python snippet demonstrating how an LLM might generate a sequence of ROS 2 actions based on a high-level command. This would involve parsing the LLM's output and mapping it to callable ROS 2 services or actions.">
+{`import rclpy
+from rclpy.node import Node
+from example_interfaces.srv import AddTwoInts # Example ROS 2 service
+
+class LLMRobotCommander(Node):
+    def __init__(self):
+        super().__init__('llm_robot_commander')
+        self.cli = self.create_client(AddTwoInts, 'add_two_ints') # Example client
+        while not self.cli.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info('service not available, waiting again...')
+        self.req = AddTwoInts.Request()
+
+    def send_llm_command(self, command_text: str):
+        self.get_logger().info(f"Processing LLM command: {command_text}")
+        # --- Conceptual LLM call to get action plan ---
+        # llm_response = call_llm_api(f"Generate ROS 2 actions for '{command_text}'")
+        # action_plan = parse_llm_response(llm_response)
+
+        # --- Execute action plan (conceptual) ---
+        # for action in action_plan:
+        #     if action.type == "service_call":
+        #         self.req.a = action.param1
+        #         self.req.b = action.param2
+        #         self.future = self.cli.call_async(self.req)
+        #         rclpy.spin_until_future_complete(self, self.future)
+        #         if self.future.result() is not None:
+        #             self.get_logger().info(f"Service result: {self.future.result().sum}")
+        #         else:
+        #             self.get_logger().error("Service call failed")
+        #     elif action.type == "publish_topic":
+        #         # Publish message to topic
+        #         pass
+        #     # ... handle other action types
+
+def main(args=None):
+    rclpy.init(args=args)
+    commander = LLMRobotCommander()
+    commander.send_llm_command("Go to the kitchen and fetch a cup.") # Example high-level command
+    commander.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+`}
+</CodeExample>
+
+### Multi-step Action Generation
+
+One of the most powerful applications of LLMs in VLA systems is their ability to generate and sequence multiple actions to achieve complex, high-level goals. Unlike traditional robotic programming that requires explicit instruction for each step, an LLM can infer the necessary sub-tasks and their order from a single natural language command.
+
+The process of multi-step action generation involves:
+1.  **Semantic Parsing**: The LLM interprets the natural language command to extract its core meaning and identify the desired end-state.
+2.  **State Assessment**: The LLM considers the current state of the robot and its environment (potentially through visual input or sensor data) to determine what actions are feasible and necessary.
+3.  **Action Sequencing**: Based on its understanding of the world and the robot's capabilities, the LLM generates a logical sequence of primitive actions. This sequence can be iterative, with the LLM generating the next action only after observing the outcome of the previous one.
+4.  **Error Handling and Replanning**: If an action fails or the environment changes unexpectedly, the LLM can analyze the new situation and adapt its plan, demonstrating a form of robust and flexible autonomy.
+
+This capability is particularly beneficial for humanoid robots that operate in unstructured human environments, where tasks are often open-ended and require dynamic adaptation.
+
+<CodeExample language="python"
+             explanation="A conceptual Python snippet for a robotic agent that uses an LLM to generate and execute a sequence of actions. This demonstrates the iterative nature of multi-step planning and execution.">
+{`from typing import List, Dict
+
+# Assume an LLM client and ROS 2 client are available
+# from llm_client import LLMClient
+# from ros2_client import ROS2Client
+
+class MultiStepAgent:
+    def __init__(self, llm_model: str = "gpt-4", robot_name: str = "humanoid_robot"):
+        # self.llm = LLMClient(model=llm_model)
+        # self.robot = ROS2Client(robot_name=robot_name)
+        pass # Placeholder for actual initialization
+
+    def execute_high_level_goal(self, goal: str):
+        print(f"Executing high-level goal: {goal}")
+        current_state = self.get_robot_state()
+        action_plan = self.generate_initial_plan(goal, current_state)
+
+        for step_num, action in enumerate(action_plan):
+            print(f"Step {step_num + 1}: Executing action '{action['description']}'")
+            success = self.execute_robot_action(action)
+            if not success:
+                print(f"Action '{action['description']}' failed. Replanning...")
+                current_state = self.get_robot_state() # Update state after failure
+                action_plan = self.replan_actions(goal, current_state, action_plan[step_num:])
+                # Restart execution from current step or handle error
+                break # For simplicity, break on first failure
+
+        print(f"Finished executing goal: {goal}")
+
+    def get_robot_state(self) -> Dict:
+        # Conceptual: Query sensors, joint states, etc. from ROS 2
+        return {"location": "kitchen", "objects_in_view": ["cup", "plate"]}
+
+    def generate_initial_plan(self, goal: str, state: Dict) -> List[Dict]:
+        # Conceptual: Call LLM to get an initial plan
+        # prompt = f"Given goal '{goal}' and state '{state}', provide a list of atomic robot actions."
+        # llm_response = self.llm.query(prompt)
+        # return parse_llm_response_to_actions(llm_response)
+        return [
+            {"name": "go_to_location", "description": "go to kitchen", "params": {"location": "kitchen"}},
+            {"name": "pick_up_object", "description": "pick up cup", "params": {"object": "cup"}},
+            {"name": "bring_to_user", "description": "bring cup to user", "params": {"user": "user"}},
+        ]
+
+    def replan_actions(self, goal: str, state: Dict, remaining_plan: List[Dict]) -> List[Dict]:
+        # Conceptual: Call LLM for replanning
+        # prompt = f"Goal '{goal}', current state '{state}', previous plan failed. Replan starting from '{remaining_plan[0]['description']}'"
+        # llm_response = self.llm.query(prompt)
+        # return parse_llm_response_to_actions(llm_response)
+        return remaining_plan # For this conceptual example, just return remaining
+
+    def execute_robot_action(self, action: Dict) -> bool:
+        # Conceptual: Map action to ROS 2 calls and execute
+        # if action["name"] == "go_to_location":
+        #     return self.robot.navigate_to(action["params"]["location"])
+        # elif action["name"] == "pick_up_object":
+        #     return self.robot.manipulate_object(action["params"]["object"], "pick")
+        print(f"  Executing ROS 2 command for {action['name']} with params {action['params']}")
+        return True # Simulate success
+
+if __name__ == "__main__":
+    agent = MultiStepAgent()
+    agent.execute_high_level_goal("Go to the kitchen and fetch a cup.")
+`}
+</CodeExample>
+
+<GlossaryTerm term="Multi-step Action Generation" definition="The process by which an AI system, often an LLM, translates a high-level goal into a sequence of atomic actions for a robot." />
+
+## Summary
+
+This chapter provided a comprehensive overview of Vision-Language-Action (VLA) systems, highlighting their transformative potential in intelligent robotics. We explored how integrating voice commands via ASR (like Whisper) and leveraging Large Language Models (LLMs) for high-level planning enables robots to interpret complex natural language instructions and generate multi-step action sequences. These capabilities are crucial for developing humanoid robots that can operate autonomously and interact intuitively in human-centric environments.
+
+## References
+
+-   SayCan: [https://saycan.github.io/](https://saycan.github.io/)
+-   PaLM-E: [https://palm.withgoogle.com/](https://palm.withgoogle.com/)
+-   ROS 2 Actions: [https://docs.ros.org/en/humble/Tutorials/Actions/Understanding-ROS2-Actions.html](https://docs.ros.org/en/humble/Tutorials/Actions/Understanding-ROS2-Actions.html)
+
+<Exercise exerciseNumber={1} difficulty="Advanced" learningObjectiveRef="Implement a conceptual VLA system for a simulated robot.">
+  <p>Design a conceptual VLA system for a simulated robot in Isaac Sim or Gazebo. The system should be able to:</p>
+  <ol>
+    <li>Receive natural language commands (e.g., "pick up the red cube and place it on the green platform").</li>
+    <li>Use an LLM (simulated or actual API call) to parse the command and generate a sequence of low-level robot actions (e.g., "navigate to red cube," "grasp red cube," "navigate to green platform," "release cube").</li>
+    <li>Execute these actions in the simulator.</li>
+  </ol>
+  <p>Focus on the high-level logic and the interaction between the language model and the robot's action execution framework.</p>
+</Exercise>

@@ -1,0 +1,111 @@
+---
+title: Bipedal Robot Planning with Isaac
+description: This chapter focuses on motion planning for bipedal robots using NVIDIA Isaac.
+keywords: ["bipedal robot", "motion planning", "Isaac Sim", "robotics"]
+sidebar_label: Bipedal Planning with Isaac
+sidebar_position: 3
+slug: /modules/isaac/bipedal-planning
+---
+
+# Bipedal Robot Planning with Isaac
+
+## Learning Objectives
+
+By the end of this chapter, you should be able to:
+- Understand the unique challenges of bipedal locomotion.
+- Explore methods for motion planning and control of bipedal robots.
+- Utilize NVIDIA Isaac tools for simulating and developing bipedal robot behaviors.
+
+## Introduction
+
+Bipedal robots, designed to mimic human walking, present some of the most complex challenges in robotics. Maintaining balance, generating stable gaits, and navigating dynamic environments on two legs requires sophisticated motion planning and control strategies. NVIDIA Isaac, particularly Isaac Sim, provides advanced tools and physics engines capable of accurately simulating these intricate behaviors. This chapter will delve into the principles of bipedal locomotion and how Isaac Sim can be leveraged to develop, test, and refine the planning and control algorithms for humanoid robots.
+
+## Key Concepts
+
+### Bipedal Planning
+
+Bipedal locomotion, the act of walking on two legs, is remarkably efficient for humans but presents immense challenges for robots. Stable bipedal walking requires continuous balance control and sophisticated motion planning to generate footstep placements and joint trajectories.
+
+Key concepts in bipedal planning include:
+
+-   **Zero Moment Point (ZMP)**: A widely used concept for analyzing and controlling the stability of bipedal robots. The ZMP is the point on the ground where the net moment of all forces (gravity and inertial forces) is zero. Keeping the ZMP within the support polygon (the area on the ground defined by the robot's feet) is crucial for maintaining balance during walking.
+-   **Whole-Body Control**: Coordinating all joints of the robot to achieve a desired motion while satisfying constraints like balance, joint limits, and contact forces. This often involves optimization techniques to generate smooth and energy-efficient movements.
+-   **Gait Generation**: The process of creating periodic patterns of leg movements that result in stable walking. Gaits can be pre-defined or dynamically generated based on terrain and task requirements.
+-   **Contact Planning**: Determining where and when the robot's feet will make contact with the environment. For uneven terrain, this involves complex perception and decision-making to choose stable footholds.
+
+NVIDIA Isaac Sim, with its robust physics engine and Python scripting capabilities, provides an excellent environment for experimenting with these bipedal planning concepts, allowing researchers and developers to rapidly prototype and test various control strategies.
+
+<CodeExample language="python"
+             explanation="A conceptual Python snippet for generating a simple walking gait for a bipedal robot in Isaac Sim. This code would typically involve inverse kinematics, trajectory generation, and ZMP control.">
+{`from omni.isaac.core.simulation_context import SimulationContext
+from omni.isaac.core.robots import Robot
+from omni.isaac.core.articulations import Articulation
+import numpy as np
+
+# Initialize Isaac Sim simulation
+simulation_context = SimulationContext()
+simulation_context.startup()
+
+# Load a bipedal robot model (conceptual)
+robot_asset_path = "/Isaac/Robots/Humanoid/humanoid.usd" # Placeholder
+humanoid_robot = simulation_context.scene.add(
+    Robot(
+        prim_path="/World/HumanoidRobot",
+        name="humanoid_robot",
+        usd_path=robot_asset_path,
+        position=np.array([0.0, 0.0, 0.5]),
+    )
+)
+
+# --- Conceptual gait generation and control loop ---
+for i in range(500):
+    simulation_context.step(render=True)
+
+    # Get current robot state
+    # joint_positions = humanoid_robot.get_joint_positions()
+    # base_pose = humanoid_robot.get_world_pose()
+
+    # Calculate desired joint targets based on gait
+    # target_joint_positions = generate_bipedal_gait(i)
+
+    # Apply joint commands
+    # humanoid_robot.set_joint_positions(target_joint_positions)
+
+    # Implement ZMP control for balance (conceptual)
+    # zmp_error = calculate_zmp_error(humanoid_robot)
+    # apply_balance_correction(humanoid_robot, zmp_error)
+
+# Cleanup
+simulation_context.shutdown()
+`}
+</CodeExample>
+
+<RobotDiagram
+  diagramId="bipedal-kinematics"
+  altText="Visual representation of bipedal robot kinematics, showing joint angles, link lengths, and degrees of freedom."
+  filePath="/img/module3_chapter3_bipedal_kinematics.png"
+  caption="Figure 3.2: Key kinematic parameters of a bipedal robot."
+/>
+
+## Summary
+
+This chapter explored the complex domain of bipedal robot planning, highlighting the unique challenges associated with achieving stable and dynamic locomotion on two legs. We delved into core concepts such as the Zero Moment Point (ZMP), whole-body control, and gait generation, which are fundamental to developing robust bipedal systems. NVIDIA Isaac Sim, with its advanced physics simulation capabilities, was identified as a critical tool for prototyping, testing, and refining these sophisticated motion planning algorithms.
+
+## References
+
+-   NVIDIA Isaac Sim Bipedal Control: [https://docs.omniverse.nvidia.com/isaacsim/latest/tutorials/tutorial_bipedal_control.html](https://docs.omniverse.nvidia.com/isaacsim/latest/tutorials/tutorial_bipedal_control.html)
+-   ZMP in Humanoid Robotics: [https://www.intechopen.com/chapters/41988](https://www.intechopen.com/chapters/41988)
+
+<Exercise exerciseNumber={1} difficulty="Advanced" learningObjectiveRef="Implement a basic bipedal gait and balance control in Isaac Sim.">
+  <p>Load a bipedal robot model into NVIDIA Isaac Sim. Develop a Python script that generates a simple walking gait (e.g., using a fixed step pattern) and implements a basic Zero Moment Point (ZMP) controller to maintain balance during locomotion. Simulate the robot walking across a flat terrain and observe its stability.</p>
+  <p>Experiment with different gait parameters and ZMP control strategies to improve the robot's walking performance.</p>
+</Exercise>
+
+
+
+
+
+<GlossaryTerm term="Bipedal Locomotion" definition="The act of walking on two legs, a complex challenge for robots requiring advanced balance and motion planning." />
+<GlossaryTerm term="Zero Moment Point (ZMP)" definition="A stability criterion for bipedal robots; the point on the ground where the net moment of forces is zero." />
+<GlossaryTerm term="Whole-Body Control" definition="A control strategy for robots that coordinates all joints to achieve a desired motion while satisfying various constraints." />
+

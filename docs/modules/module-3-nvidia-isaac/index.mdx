@@ -1,0 +1,61 @@
+---
+title: "Module 3: The AI Robot Brain (NVIDIA Isaac)"
+description: Explore how NVIDIA Isaac platform accelerates AI development for robotics.
+keywords: ["NVIDIA Isaac", "AI robotics", "Isaac Sim", "Isaac ROS", "module introduction"]
+sidebar_label: "Module 3 - NVIDIA Isaac"
+sidebar_position: 3
+slug: /modules/isaac
+---
+
+# Module 3: The AI Robot Brain (NVIDIA Isaac)
+
+## Introduction
+
+Welcome to Module 3 of the Physical AI & Humanoid Robotics Textbook! In this module, we will explore the **NVIDIA Isaac** platform, a comprehensive suite of tools and technologies designed to accelerate the development and deployment of AI-powered robots. Isaac leverages NVIDIA's expertise in GPU computing and simulation to provide solutions for various robotics challenges, from realistic simulation and synthetic data generation to high-performance navigation and advanced motion planning for complex robots like humanoids. This module will equip you with the knowledge to utilize Isaac's capabilities to build more intelligent and capable robots.
+
+## Prerequisites
+
+Before starting this module, it is recommended that you have:
+- A solid understanding of ROS 2 core concepts (from Module 1).
+- Familiarity with simulation environments (from Module 2).
+- Basic Python programming skills.
+
+## Concept Map
+
+(Placeholder for a concept map image or diagram detailing the relationship between Isaac Sim, Isaac ROS, and AI robotics)
+
+## Practical Assignments
+
+This module includes practical lab assignments to reinforce your understanding. These will be presented as `ri.LabTask` components within the chapters.
+
+<LabTask
+  labId="mod3-lab1"
+  title="Isaac Sim Basic Environment Setup and Data Generation"
+  objective="Set up a basic robotics simulation environment in Isaac Sim and generate synthetic data with ground truth annotations."
+  prerequisites={["Chapter 1: Introduction to Isaac Sim and Synthetic Data"]}
+  equipment={["Computer with NVIDIA GPU", "NVIDIA Omniverse Launcher", "Isaac Sim installed"]}
+  steps={[
+    "Install and configure Isaac Sim.",
+    "Launch a basic scene with a simple robot and objects.",
+    "Programmatically control camera and sensor settings.",
+    "Generate and save synthetic RGB, depth, and semantic segmentation data.",
+  ]}
+  deliverables={["Isaac Sim project file.", "Sample synthetic dataset with annotations.", "Short report on observation of generated data."]}
+  assessmentCriteria="Successful setup of Isaac Sim, generation of diverse synthetic data, and accurate ground truth annotations."
+/>
+
+<LabTask
+  labId="mod3-lab2"
+  title="Isaac ROS Navigation Stack Integration"
+  objective="Integrate Isaac ROS navigation components into a simulated robot in Isaac Sim to enable autonomous navigation and mapping."
+  prerequisites={["Chapter 2: Isaac ROS for Navigation and SLAM"]}
+  equipment={["Computer with NVIDIA GPU", "Isaac Sim installed", "Isaac ROS Docker container or installation"]}
+  steps={[
+    "Set up a robot with simulated sensors in Isaac Sim.",
+    "Launch Isaac ROS VSLAM nodes to localize the robot and build a map.",
+    "Configure Nav2 to perform autonomous navigation in the mapped environment.",
+    "Test navigation to various waypoints in the simulation."
+  ]}
+  deliverables={["Isaac Sim scene with Nav2 integration.", "Generated map of the environment.", "Video demonstration of autonomous navigation."]}
+  assessmentCriteria="Accurate localization and mapping, successful autonomous navigation to target waypoints."
+/>

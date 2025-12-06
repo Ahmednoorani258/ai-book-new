@@ -1,0 +1,63 @@
+---
+title: Digital Twin Workstation, Jetson Edge Kit, and Sensors
+description: This section details the hardware architecture for the textbook's practical implementations.
+keywords: ["hardware", "workstation", "Jetson", "sensors", "robotics"]
+sidebar_label: Hardware Architecture
+sidebar_position: 1
+slug: /hardware-architecture/workstation-jetson-sensors
+---
+
+# Digital Twin Workstation, Jetson Edge Kit, and Sensors
+
+This section describes the hardware components recommended or used for practical implementations and exercises throughout this textbook. These components are crucial for developing and testing Physical AI systems, from high-fidelity simulations on powerful workstations to real-world deployments on edge devices and robots.
+
+## Digital Twin Workstation (RTX + Ubuntu)
+
+A high-performance workstation is essential for running complex physics simulations and AI model training, especially when working with NVIDIA Isaac Sim and large datasets.
+
+-   **Processor**: Intel Core i7/i9 or AMD Ryzen 7/9 (latest generation)
+-   **RAM**: 32 GB or more
+-   **GPU**: NVIDIA RTX series (e.g., RTX 3080, 4090) with at least 10 GB VRAM. This is critical for GPU-accelerated simulations and AI inference.
+-   **Operating System**: Ubuntu (LTS version, e.g., 20.04 or 22.04). Ubuntu provides the best compatibility and performance for ROS 2 and NVIDIA developer tools.
+
+This workstation serves as the primary development environment for designing digital twins, running high-fidelity simulations, and training deep learning models.
+
+## Jetson Orin Edge Kit
+
+For deploying AI models and running ROS 2 applications on a physical robot or at the edge, NVIDIA Jetson platforms are highly recommended. The Jetson Orin series offers significant AI performance in a compact, power-efficient form factor.
+
+-   **Model**: NVIDIA Jetson Orin Nano Developer Kit or Jetson AGX Orin Developer Kit.
+-   **Purpose**: On-robot AI inference, sensor data processing, and local control.
+-   **Software**: JetPack SDK, including CUDA, cuDNN, TensorRT, and pre-built ROS 2 packages optimized for Jetson.
+
+The Jetson Orin is ideal for bridging the gap between simulation and real-world deployment, enabling edge computing for robotics.
+
+## Sensors (Intel RealSense, IMU)
+
+Accurate perception is fundamental for any intelligent robot. The following sensors are commonly used and recommended:
+
+-   **Intel RealSense Depth Camera**: Provides high-quality RGB-D (color and depth) data, essential for 3D perception, object detection, and SLAM.
+    -   **Models**: D435i, D455 (integrated IMU in 'i' models is a bonus).
+-   **IMU (Inertial Measurement Unit)**: Crucial for robot localization, pose estimation, and balance control.
+    -   **Integration**: Often integrated into RealSense cameras or as standalone units (e.g., Adafruit BNO055, Xsens MTi series).
+
+These sensors provide the necessary inputs for the robot's perception pipelines, allowing it to understand its surroundings and its own state.
+
+## Robots (Unitree Go2, G1)
+
+This textbook uses conceptual humanoid robot examples, but for physical implementations, quadrupeds and humanoids from Unitree Robotics are excellent platforms for experimentation.
+
+-   **Unitree Go2**: A versatile quadruped robot suitable for locomotion, navigation, and manipulation tasks. Its robust design makes it an excellent platform for learning physical AI concepts.
+-   **Unitree G1**: A research-grade humanoid robot, offering advanced capabilities for bipedal locomotion and complex manipulation, ideal for pushing the boundaries of humanoid AI.
+
+These robots provide the physical embodiment necessary to test and validate the algorithms developed in simulation.
+
+## Cloud-Native Lab (AWS Omniverse)
+
+For scalable AI training, collaborative simulation, and remote development, cloud platforms integrated with Omniverse can provide significant advantages.
+
+-   **AWS EC2 with NVIDIA GPUs**: For training large AI models that require more computational power than a local workstation.
+-   **NVIDIA Omniverse Cloud**: Enables collaborative 3D workflows and scalable simulation environments accessible from anywhere, fostering distributed development and testing.
+
+This cloud integration supports advanced research and large-scale deployment scenarios, providing flexibility and scalability beyond local hardware constraints.
+

@@ -1,0 +1,58 @@
+---
+title: Page Metadata Guidelines
+description: How to use the ri.PageMetadata frontmatter for content pages.
+---
+
+# `ri.PageMetadata` Usage Guidelines
+
+Every content page (`.mdx`) in this textbook must include a frontmatter block at the very top of the file. This block, known as `ri.PageMetadata`, provides essential information for Docusaurus to correctly build the site, manage navigation, and optimize for search engines.
+
+## Template
+
+Copy and paste the following template at the top of your new content file and fill in the values for each field.
+
+```yaml
+---
+title: "Your Concise Page Title"
+description: "A detailed but brief description of this page's content, used for SEO. Should be at least 20 characters."
+keywords: ["keyword1", "keyword2", "keyword3", "at-least-three-keywords"]
+sidebar_label: "Short Sidebar Label"
+sidebar_position: 1
+slug: "your-url-slug"
+---
+```
+
+## Field Explanations
+
+### `title`
+- **Type**: `string`
+- **Description**: The main title of the page, displayed at the top of the content.
+- **Example**: `"Introduction to ROS 2 Core Concepts"`
+
+### `description`
+- **Type**: `string`
+- **Description**: A short paragraph describing the page's content. This is crucial for search engine optimization (SEO) as it often appears in search results.
+- **Example**: `"Learn about the fundamental concepts of ROS 2, including nodes, topics, and services, which form the communication backbone of robotic systems."`
+
+### `keywords`
+- **Type**: `array` of `string`s
+- **Description**: A list of relevant keywords that users might search for to find this page. Include at least three.
+- **Example**: `["ROS 2", "robotics", "nodes", "topics", "services", "rclpy"]`
+
+### `sidebar_label`
+- **Type**: `string`
+- **Description**: The short, user-friendly label for this page that will appear in the navigation sidebar.
+- **Example**: `"Core Concepts"`
+
+### `sidebar_position`
+- **Type**: `integer`
+- **Description**: A number that determines the order of this page within its section in the sidebar. Lower numbers appear first.
+- **Example**: `1`
+
+### `slug`
+- **Type**: `string`
+- **Description**: The unique end part of the URL for this page. It should be all lowercase and use hyphens instead of spaces.
+- **Example**: `"/modules/ros2/core-concepts"` (Docusaurus will automatically add the prefix, you just need the last part, e.g. `core-concepts`)
+---
+
+**Note**: All fields are required. Failure to include a complete and valid frontmatter block will cause the site build to fail.

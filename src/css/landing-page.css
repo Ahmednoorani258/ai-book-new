@@ -1,0 +1,220 @@
+/* Landing Page Styles */
+
+/* Hero Section */
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+.heroBanner .hero__title {
+  color: var(--ifm-color-primary-darkest);
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+[data-theme='dark'] .heroBanner .hero__title {
+  color: var(--ifm-color-primary-darker);
+}
+
+.heroBanner .hero__subtitle {
+  color: var(--ifm-font-color-secondary);
+  font-size: 1.25rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+}
+
+.heroBanner .buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* CTA Section */
+.ctaSection {
+  padding: 4rem 0;
+  background-color: var(--ifm-color-primary-dark);
+  color: var(--ifm-color-on-primary);
+}
+
+.ctaSection .hero__title {
+  color: var(--ifm-color-on-primary);
+  margin-bottom: 1rem;
+}
+
+.ctaSection .hero__subtitle {
+  color: var(--ifm-color-on-primary-dark);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+}
+
+/* Roadmap Section */
+.roadmapSection {
+  padding: 4rem 0;
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+}
+
+.roadmapSection .hero__title {
+  color: var(--ifm-color-primary-darkest);
+  margin-bottom: 1rem;
+}
+
+[data-theme='dark'] .roadmapSection .hero__title {
+  color: var(--ifm-color-primary-darker);
+}
+
+.roadmapSection .hero__subtitle {
+  color: var(--ifm-font-color-secondary);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 3rem;
+}
+
+.roadmapVisual {
+  margin-bottom: 3rem;
+  max-width: 100%;
+  height: auto;
+}
+
+.roadmapVisual img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* About Section */
+.aboutSection {
+  padding: 4rem 0;
+  background-color: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+}
+
+.aboutSection .hero__title {
+  color: var(--ifm-color-primary-darkest);
+  margin-bottom: 1rem;
+}
+
+[data-theme='dark'] .aboutSection .hero__title {
+  color: var(--ifm-color-primary-darker);
+}
+
+.aboutImage {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--ifm-global-radius);
+  box-shadow: var(--ifm-global-shadow-md);
+}
+
+/* Modules Section */
+.modulesSection {
+  padding: 4rem 0;
+  background-color: var(--ifm-color-primary-light);
+  color: var(--ifm-color-on-primary);
+}
+
+.modulesSection .hero__title {
+  color: var(--ifm-color-on-primary);
+  margin-bottom: 1rem;
+}
+
+.modulesSection .hero__subtitle {
+  color: var(--ifm-color-on-primary-dark);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 3rem;
+}
+
+.moduleCard {
+  height: 100%; /* Ensure cards are same height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  border-radius: var(--ifm-global-radius);
+  box-shadow: var(--ifm-global-shadow-md);
+  margin-bottom: 1.5rem; /* Space between cards */
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.moduleCard .card__header h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--ifm-color-primary-darkest);
+}
+
+.moduleCard .card__body {
+  flex-grow: 1; /* Allows body to expand and push footer down */
+}
+
+.moduleCard .card__body p {
+  font-size: 0.95rem;
+  color: var(--ifm-font-color-secondary);
+}
+
+.moduleCard .card__footer {
+  padding-top: 1rem;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+/* Responsive Adjustments for Smaller Screens */
+@media screen and (max-width: 768px) {
+  .heroBanner .hero__title {
+    font-size: 2.2rem;
+  }
+
+  .heroBanner .hero__subtitle {
+    font-size: 1rem;
+  }
+
+  .heroBanner .buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .ctaSection,
+  .roadmapSection,
+  .aboutSection,
+  .modulesSection {
+    padding: 2.5rem 0;
+  }
+
+  .modulesSection .row {
+    flex-direction: column; /* Stack module cards vertically */
+  }
+
+  .moduleCard {
+    margin-bottom: 1rem;
+  }
+
+  .moduleCard .card__header h3 {
+    font-size: 1.1rem;
+  }
+
+  .moduleCard .card__body p {
+    font-size: 0.9rem;
+  }
+
+  .aboutSection .col {
+    width: 100%; /* Make columns full width on small screens */
+  }
+
+  .aboutSection .col--6:first-child {
+    margin-bottom: 2rem; /* Add space between stacked columns */
+  }
+}

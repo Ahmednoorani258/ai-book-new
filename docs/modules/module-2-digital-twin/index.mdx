@@ -1,0 +1,60 @@
+---
+title: "Module 2: The Digital Twin (Gazebo & Unity)"
+description: Explore the creation and utilization of digital twins for robotic systems using Gazebo and Unity.
+keywords: ["digital twin", "simulation", "Gazebo", "Unity", "robotics"]
+sidebar_label: "Module 2 - Digital Twin"
+sidebar_position: 2
+slug: /modules/digital-twin
+---
+
+# Module 2: The Digital Twin (Gazebo & Unity)
+
+## Introduction
+
+Welcome to Module 2 of the Physical AI & Humanoid Robotics Textbook! This module delves into the powerful concept of **Digital Twins** – virtual replicas of physical robotic systems. We will explore how open-source simulators like **Gazebo** provide accurate physics and sensor modeling, and how the **Unity** game engine offers rich environments for human-robot interaction (HRI). Mastering these tools is crucial for iterative development, safe testing, and efficient optimization of humanoid robots.
+
+## Prerequisites
+
+Before starting this module, it is recommended that you have:
+- A basic understanding of ROS 2 concepts (from Module 1).
+- Familiarity with 3D concepts and coordinate systems.
+
+## Concept Map
+
+(Placeholder for a concept map image or diagram detailing the relationship between Gazebo, Unity, and Digital Twins)
+
+## Practical Assignments
+
+This module includes practical lab assignments to reinforce your understanding. These will be presented as `ri.LabTask` components within the chapters.
+
+<LabTask
+  labId="mod2-lab1"
+  title="Gazebo World and Robot Simulation"
+  objective="Create a custom Gazebo world with a simple environment and a simulated robot, then launch and interact with it."
+  prerequisites={["Chapter 1: Gazebo for Digital Twins"]}
+  equipment={["Computer with Ubuntu 20.04+", "ROS 2 Foxy/Humble installed", "Gazebo simulator installed"]}
+  steps={[
+    "Design a simple Gazebo world with obstacles.",
+    "Import a simple robot model (e.g., from URDF) into the Gazebo world.",
+    "Launch the Gazebo world and the robot in simulation.",
+    "Use ROS 2 topics to command the robot's movement in Gazebo.",
+  ]}
+  deliverables={["Custom Gazebo world file.", "ROS 2 package with robot description and launch files.", "Video demonstration of robot moving in simulation."]}
+  assessmentCriteria="Successful simulation launch, robot movement, and basic interaction."
+/>
+
+<LabTask
+  labId="mod2-lab2"
+  title="Unity HRI Scene Development"
+  objective="Develop an interactive human-robot interaction scene in Unity, integrating basic human input for robot control."
+  prerequisites={["Chapter 2: Human-Robot Interaction in Unity"]}
+  equipment={["Computer with Unity Hub and Unity Editor (LTS version) installed"]}
+  steps={[
+    "Create a new Unity 3D project.",
+    "Import a simple robot model and a human avatar.",
+    "Implement a C# script for keyboard control of the robot.",
+    "Design a basic UI to display robot status.",
+  ]}
+  deliverables={["Unity project folder.", "Short video demonstrating human control of the robot in Unity.", "Screenshot of the Unity HRI scene."]}
+  assessmentCriteria="Functional human control of the robot, clear UI display, and correct scene setup."
+/>

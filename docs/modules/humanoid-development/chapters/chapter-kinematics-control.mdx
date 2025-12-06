@@ -1,0 +1,57 @@
+---
+title: Kinematics and Humanoid Control
+description: This chapter covers the fundamentals of kinematics and control for humanoid robots.
+keywords: ["kinematics", "humanoid control", "robotics", "inverse kinematics"]
+sidebar_label: Kinematics & Control
+sidebar_position: 2
+slug: /modules/humanoid-development/kinematics-control
+---
+
+# Kinematics and Humanoid Control
+
+## Learning Objectives
+
+By the end of this chapter, you should be able to:
+- Define forward and inverse kinematics for robotic manipulators.
+- Understand the principles of joint space and task space control.
+- Identify common control strategies used in humanoid robotics.
+
+<h2>Introduction</h2>
+
+Controlling a humanoid robot to perform intricate movements, walk, or interact with objects requires a deep understanding of its kinematics and control systems. Kinematics describes the motion of a robot without considering the forces that cause it, while control focuses on generating those forces to achieve desired motions. This chapter will delve into the fundamental concepts of kinematics (both forward and inverse) and explore various control methodologies essential for making humanoid robots move gracefully and purposefully in the physical world.
+
+<h2>Key Concepts</h2>
+
+<h3>Kinematics</h3>
+
+**Kinematics** deals with the study of motion of points, bodies, and systems of bodies without considering the forces that cause the motion. In robotics, kinematics is used to describe the relationship between the joint angles of a robot and the position and orientation of its end-effector (e.g., a hand or foot).
+
+-   **Forward Kinematics (FK)**: Given the joint angles of a robot, forward kinematics calculates the position and orientation of the end-effector in 3D space. For a humanoid robot, FK can determine where a hand is located based on the angles of its shoulder, elbow, and wrist joints.
+-   **Inverse Kinematics (IK)**: Given a desired position and orientation for the end-effector, inverse kinematics calculates the corresponding joint angles required to achieve that pose. IK is significantly more complex than FK, often involving numerical solutions, especially for highly redundant robots like humanoids. It's crucial for tasks like reaching for an object or placing a foot at a specific location.
+
+Understanding both forward and inverse kinematics is foundational for motion planning and control of any multi-joint robot, particularly for humanoids where precise body part positioning is often required for balance and interaction.
+
+
+<GlossaryTerm term="Kinematics" definition="The study of motion without considering the forces causing it, focusing on joint angles and end-effector positions." />
+
+<GlossaryTerm term="Forward Kinematics (FK)" definition="Calculates the end-effector's position/orientation given the robot's joint angles." />
+
+<GlossaryTerm term="Inverse Kinematics (IK)" definition="Calculates the joint angles required to achieve a desired end-effector position/orientation." />
+
+<h2>Summary</h2>
+
+This chapter laid the groundwork for understanding how humanoid robots move by exploring the fundamentals of kinematics and control. We differentiated between forward and inverse kinematics, highlighting their importance in determining robot pose and generating desired movements. While this chapter focused on the theoretical aspects, subsequent modules will delve into practical implementations using various robotic frameworks and simulation environments.
+
+<h2>References</h2>
+
+-   Siciliano, B., Sciavicco, L., Villani, L., & Oriolo, G. (2010). Robotics: Modelling, Planning and Control. Springer.
+-   Murray, R. M., Li, Z., & Sastry, S. S. (1994). A Mathematical Introduction to Robotic Manipulation. CRC Press.
+
+<Exercise exerciseNumber={1} difficulty="Beginner" learningObjectiveRef="Apply forward and inverse kinematics concepts to a simple robot arm.">
+  <p>Consider a 2-DOF (degrees of freedom) planar robotic arm with two links of equal length `L`.</p>
+  <ol>
+    <li>Derive the forward kinematics equations to find the (x, y) position of the end-effector given the two joint angles (θ1, θ2).</li>
+    <li>For a target end-effector position (x, y), derive the inverse kinematics equations to find the required joint angles (θ1, θ2). Discuss any potential ambiguities or multiple solutions.</li>
+  </ol>
+  <p>You can use a programming language of your choice (e.g., Python) to implement and visualize the solutions.</p>
+</Exercise>

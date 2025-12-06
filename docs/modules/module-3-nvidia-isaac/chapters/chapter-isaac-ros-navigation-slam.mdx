@@ -1,0 +1,103 @@
+---
+title: Isaac ROS for Navigation and SLAM
+description: This chapter explores NVIDIA Isaac ROS for robot navigation and Simultaneous Localization and Mapping (SLAM).
+keywords: ["Isaac ROS", "Navigation", "SLAM", "ROS 2", "robotics"]
+sidebar_label: Isaac ROS Navigation & SLAM
+sidebar_position: 2
+slug: /modules/isaac/isaac-ros-navigation-slam
+---
+
+# Isaac ROS for Navigation and SLAM
+
+## Learning Objectives
+
+By the end of this chapter, you should be able to:
+- Understand the role of NVIDIA Isaac ROS in accelerating robotics development.
+- Explain the concepts of Visual SLAM (VSLAM) and its importance.
+- Utilize Isaac ROS components for robot navigation tasks.
+
+## Introduction
+
+Accurate and reliable navigation is paramount for autonomous robots. This involves knowing where the robot is (localization), building a map of its surroundings (mapping), and planning a path to a goal (path planning). **Simultaneous Localization and Mapping (SLAM)** is a critical capability that allows a robot to build a map of an unknown environment while simultaneously keeping track of its own location within that map. NVIDIA Isaac ROS is a collection of hardware-accelerated packages that bring high-performance capabilities to ROS 2, particularly for perception and navigation tasks. This chapter will delve into how Isaac ROS leverages GPU acceleration to enhance SLAM and navigation for humanoid robots.
+
+## Key Concepts
+
+### Isaac ROS: Visual SLAM and Nav2
+
+NVIDIA Isaac ROS is a collection of GPU-accelerated packages that extend ROS 2 with high-performance perception and AI capabilities. It leverages NVIDIA GPUs to provide significant speedups for computationally intensive tasks, making it ideal for the real-time demands of humanoid robotics.
+
+-   **Visual SLAM (VSLAM)**: VSLAM refers to SLAM algorithms that primarily use visual sensor data (e.g., from cameras) to estimate the robot's pose and reconstruct the environment. Isaac ROS offers highly optimized VSLAM components that can process camera feeds at high frame rates, generating accurate pose estimates and dense 3D maps. This is crucial for humanoid robots operating in dynamic, unstructured environments where GPS might be unavailable.
+
+-   **Nav2 (ROS 2 Navigation Stack)**: Nav2 is the standard navigation framework for ROS 2. It provides a complete solution for robot navigation, including global and local path planning, obstacle avoidance, and recovery behaviors. Isaac ROS enhances Nav2 by providing GPU-accelerated components for tasks like costmap generation, point cloud processing, and global planning, allowing humanoid robots to navigate more quickly and robustly in complex scenes.
+
+The combination of Isaac ROS VSLAM and accelerated Nav2 components enables humanoid robots to achieve advanced autonomous navigation capabilities, from indoor exploration and mapping to dynamic obstacle avoidance in crowded spaces.
+
+<CodeExample language="python"
+             explanation="A conceptual Python ROS 2 launch file snippet showing how to integrate an Isaac ROS VSLAM node. This typically involves launching the `vslam` node along with other necessary sensors and transformations.">
+{`from launch import LaunchDescription
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    return LaunchDescription([
+        Node(
+            package='isaac_ros_visual_slam',
+            executable='isaac_ros_visual_slam',
+            name='visual_slam_node',
+            output='screen',
+            parameters=[{
+                'denoise_input_images': True,
+                'rectified_images': True,
+                'enable_imu_fusion': True,
+                'gyro_bias_estimation': True,
+                'extrinsic_tf_frame': 'odom',
+                'map_frame': 'map',
+                'odom_frame': 'odom',
+                'base_frame': 'base_link',
+                'left_camera_frame': 'left_cam',
+                'right_camera_frame': 'right_cam',
+                'imu_frame': 'imu_link',
+                'enable_debug_mode': False,
+                'debug_path': '/tmp/isaac_ros_visual_slam',
+                'enable_slam_visual_output': True,
+                'enable_landmarks_view': True,
+                'enable_observations_view': True,
+                'enable_motion_tracking_view': True,
+                'enable_imu_based_motion_prediction': True,
+                'flow_visual_debug_min_detection_rate': 10.0,
+                'flow_visual_debug_max_detection_rate': 100.0,
+                'image_timestamp_uncertainty_threshold': 0.001,
+            }],
+            remappings=[
+                ('left/image_rect', '/left_camera/image_rect'),
+                ('left/camera_info', '/left_camera/camera_info'),
+                ('right/image_rect', '/right_camera/image_rect'),
+                ('right/camera_info', '/right_camera/camera_info'),
+                ('imu', '/imu/data'),
+                ('visual_slam/tracking/odometry', '/odom'),
+                ('visual_slam/tracking/slam_path', '/slam_path'),
+                ('visual_slam/map/pose', '/slam_map_pose'),
+                ('visual_slam/map/cloud', '/slam_map_cloud'),
+            ]
+        ),
+        # Add other necessary nodes like static_transform_publisher, etc.
+    ])
+`}
+</CodeExample>
+
+<GlossaryTerm term="Isaac ROS" definition="NVIDIA's collection of GPU-accelerated packages that extend ROS 2 with high-performance perception and AI capabilities." />
+<GlossaryTerm term="VSLAM" definition="Visual Simultaneous Localization and Mapping, using visual sensor data to estimate robot pose and build environment maps." />
+<GlossaryTerm term="Nav2" definition="The standard ROS 2 navigation framework, providing global and local path planning, obstacle avoidance and recovery behaviors." />
+
+## Summary
+
+This chapter explored how NVIDIA Isaac ROS significantly enhances ROS 2 capabilities for navigation and SLAM tasks, particularly for humanoid robots. We delved into the concepts of Visual SLAM (VSLAM) and the Nav2 framework, understanding how Isaac ROS leverages GPU acceleration to provide high-performance solutions for real-time localization, mapping, and path planning. The integration of these accelerated components is crucial for enabling advanced autonomous navigation in complex and dynamic environments.
+
+## References
+
+-   NVIDIA Isaac ROS Documentation: [https://docs.nvidia.com/isaac-ros/latest/index.html](https://docs.nvidia.com/isaac-ros/latest/index.html)
+-   ROS 2 Navigation (Nav2) Documentation: [https://navigation.ros.org/](https://navigation.ros.org/)
+
+<Exercise exerciseNumber={1} difficulty="Advanced" learningObjectiveRef="Implement a basic autonomous navigation stack for a robot using Isaac ROS and Nav2.">
+  <p>Set up a simulated environment in Isaac Sim with a robot equipped with appropriate sensors (e.g., stereo cameras, IMU). Integrate Isaac ROS VSLAM nodes to provide accurate pose estimation and mapping. Then, configure the Nav2 stack to enable autonomous navigation, allowing the robot to explore the environment and reach a target goal. Optionally, explore how to incorporate object detection from Isaac ROS to enable more intelligent obstacle avoidance.</p>
+  <p>Demonstrate the robot's ability to localize, map, and navigate autonomously within the simulated environment.</p>
+</Exercise>
