@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkai_book_new=globalThis.webpackChunkai_book_new||[]).push([[3550],{7984:o=>{o.exports=JSON.parse('{"metadata":{"permalink":"/ai-book-new/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":4,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);
