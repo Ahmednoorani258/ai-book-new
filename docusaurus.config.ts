@@ -9,14 +9,13 @@ const config: Config = {
 
   // Set the production url of your site here
   // TODO: Update this when the GitHub repository is public
-  url: 'https://example.com',
+  url: 'https://Ahmednoorani258.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/ai-book-new/',
 
   // GitHub pages deployment config.
-  // TODO: Update these when the GitHub repository is public
-  organizationName: 'your-org', // Usually your GitHub org/user name.
+  organizationName: 'Ahmednoorani258', // Usually your GitHub org/user name.
   projectName: 'ai-book-new', // Usually your repo name.
 
   onBrokenLinks: 'throw',
