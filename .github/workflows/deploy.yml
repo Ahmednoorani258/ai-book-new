@@ -4,7 +4,7 @@ on:
  branches:
  - main
  - master
- jobs:
+jobs:
  build:
  name: Build Docusaurus
  runs-on: ubuntu-latest
@@ -12,21 +12,21 @@ on:
  - uses: actions/checkout@v4
  with:
  fetch-depth: 0
- - uses: actions/setup-node@v4
+- uses: actions/setup-node@v4
  with:
  node-version: 20
  cache: npm
- cache-dependency-path: ./package-lock.json
- - name: Install dependencies
- working-directory: ./
+ cache-dependency-path: your-book-folder/package-lock.json
+- name: Install dependencies
+ working-directory: your-book-folder
  run: npm ci
- - name: Build website
- working-directory: ./
+- name: Build website
+ working-directory: your-book-folder
  run: npm run build
- - name: Upload Build Artifact
+- name: Upload Build Artifact
  uses: actions/upload-pages-artifact@v3
  with:
- path: ./build
+ path: your-book-folder/build
 deploy:
  name: Deploy to GitHub Pages
  needs: build
