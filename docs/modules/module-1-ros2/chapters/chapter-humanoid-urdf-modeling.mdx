@@ -1,0 +1,154 @@
+---
+title: Humanoid Modeling with URDF
+description: This chapter covers humanoid robot modeling using URDF in ROS 2.
+keywords: ["URDF", "humanoid modeling", "ROS 2", "robot description"]
+sidebar_label: Humanoid URDF Modeling
+sidebar_position: 2
+slug: /modules/ros2/humanoid-urdf-modeling
+---
+
+# Humanoid Modeling with URDF
+
+## Learning Objectives
+
+By the end of this chapter, you should be able to:
+- Understand the structure and purpose of URDF files for robot modeling.
+- Create a basic URDF description for a humanoid robot.
+- Differentiate between URDF links and joints.
+
+## Introduction
+
+Accurately modeling the physical structure of a robot is fundamental to its simulation, control, and interaction with the environment. The Unified Robot Description Format (URDF) is an XML format used in ROS 2 to describe all elements of a robot. This chapter will guide you through creating URDF models specifically for humanoid robots, covering links, joints, and the tools available for visualization and validation.
+
+## Key Concepts
+
+### URDF for Humanoids
+
+The Unified Robot Description Format (URDF) is an XML specification for describing the kinematic and dynamic properties of a robot. For humanoids, URDF allows us to define the intricate skeletal structure, joint limits, and visual elements that make up the robot.
+
+A URDF file typically consists of:
+- **Links**: These represent the rigid parts of the robot (e.g., torso, upper arm, forearm, hand). Each link has physical properties like mass, inertia, and visual/collision geometries.
+- **Joints**: These define the connections between two links and specify their type of motion (e.g., `revolute`, `continuous`, `fixed`). Humanoid robots typically have many `revolute` joints for movement similar to biological joints.
+
+Modeling a humanoid accurately requires careful consideration of each limb segment as a link and each point of articulation as a joint. The hierarchy of links and joints forms a kinematic chain, which is essential for understanding the robot's pose and movement capabilities.
+
+<CodeExample language="xml"
+             explanation="A minimal URDF example demonstrating a single link and a single joint. This structure forms the basic building blocks for more complex humanoid models.">
+{`<robot name="simple_humanoid">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.1 0.1 0.1" />
+      </geometry>
+      <material name="white">
+        <color rgba="1 1 1 1" />
+      </material>
+    </visual>
+  </link>
+
+  <link name="upper_link">
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.2" />
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 1" />
+      </material>
+    </visual>
+  </link>
+
+  <joint name="base_to_upper" type="revolute">
+    <parent link="base_link" />
+    <child link="upper_link" />
+    <origin xyz="0 0 0.1" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="1" />
+  </joint>
+</robot>
+`}
+</CodeExample>
+
+<RobotDiagram
+  diagramId="urdf-diagram"
+  altText="Visual representation of a simple humanoid URDF model showing a base link and an upper link connected by a revolute joint."
+  filePath="/img/module1_chapter2_urdf_diagram.png"
+  caption="Figure 1.1: Visual representation of a simple humanoid URDF model."
+/>
+
+### ROS Packages & Launch Files
+
+To effectively manage and deploy ROS 2 applications, particularly for complex humanoid robots, **ROS Packages** and **Launch Files** are indispensable.
+
+A **ROS Package** is the fundamental unit for organizing ROS 2 code. It encapsulates source files, build scripts, configuration files, and other resources related to a specific piece of functionality (e.g., a package for robot kinematics, another for navigation). Packages ensure modularity and reusability of code.
+
+**Launch Files** are XML or Python files used to start and configure multiple ROS 2 nodes simultaneously. They are crucial for orchestrating complex robotic systems, allowing you to define which nodes to run, set parameters, and remap topics or services, all from a single command. For a humanoid robot, a launch file might start nodes for joint control, sensor data processing, and URDF visualization.
+
+<GlossaryTerm term="ROS Package" definition="A fundamental unit for organizing ROS 2 code, containing source files, build scripts, and configuration." />
+
+<GlossaryTerm term="Launch File" definition="An XML or Python file used to start and configure multiple ROS 2 nodes simultaneously." />
+
+<CodeExample language="python"
+             explanation="A simple Python ROS 2 launch file that starts a single URDF visualization node. This demonstrates how to use the `Node` and `DeclareLaunchArgument` actions to configure a node during startup.">
+{`from launch import LaunchDescription
+from launch_ros.actions import Node
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
+
+def generate_launch_description():
+    # Declare arguments
+    use_sim_time_arg = DeclareLaunchArgument(
+        'use_sim_time',
+        default_value='false',
+        description='Use simulation (Gazebo) clock if true',
+    )
+
+    # Robot State Publisher node
+    robot_state_publisher_node = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name='robot_state_publisher',
+        output='screen',
+        parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}],
+        arguments=['path/to/your_humanoid.urdf'], # Replace with your URDF path
+    )
+
+    # RViz2 node (optional, for visualization)
+    rviz_node = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2',
+        output='screen',
+        arguments=['-d', 'path/to/your_rviz_config.rviz'], # Replace with your RViz config
+    )
+
+    return LaunchDescription([
+        use_sim_time_arg,
+        robot_state_publisher_node,
+        rviz_node,
+    ])
+`}
+</CodeExample>
+
+## Summary
+
+This chapter explored the fundamentals of humanoid robot modeling using URDF in ROS 2. We covered the essential components of a URDF file—links and joints—and understood how they define the kinematic structure of a robot. Additionally, we delved into the role of ROS packages for organizing code and ROS launch files for orchestrating the execution of multiple nodes, which are critical for managing complex robotic systems.
+
+## References
+
+-   ROS 2 URDF Tutorial: [https://docs.ros.org/en/humble/Tutorials/URDF/URDF-C++-tutorial.html](https://docs.ros.org/en/humble/Tutorials/URDF/URDF-C++-tutorial.html)
+-   ROS 2 Launch System: [https://docs.ros.org/en/humble/Tutorials/Launch-system.html](https://docs.ros.org/en/humble/Tutorials/Launch-system.html)
+
+<Exercise exerciseNumber={1} difficulty="Intermediate" learningObjectiveRef="Create and launch a URDF model in ROS 2.">
+  <p>Create a simple ROS 2 package containing a URDF description of a two-link robotic arm (e.g., with an upper arm and a forearm). Define appropriate links, joints, and visual properties. Then, create a Python launch file within the same package to:</p>
+  <ol>
+    <li>Load the URDF model using the <code>robot_state_publisher</code>.</li>
+    <li>Launch RViz2 to visualize the robotic arm.</li>
+  </ol>
+  <p>Verify that your robotic arm appears correctly in RViz2 when you launch your package.</p>
+</Exercise>
+
+<GlossaryTerm term="URDF" definition="Unified Robot Description Format, an XML file format used in ROS to describe all elements of a robot." />
+
+<GlossaryTerm term="Link" definition="A rigid body part of a robot in URDF, such as a limb or torso." />
+
+<GlossaryTerm term="Joint" definition="A connection between two links in URDF, specifying their relative motion." />

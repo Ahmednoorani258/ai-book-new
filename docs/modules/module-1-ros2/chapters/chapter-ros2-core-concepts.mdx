@@ -1,0 +1,114 @@
+---
+title: Introduction to ROS 2 Core Concepts
+description: This chapter introduces the fundamental concepts of ROS 2.
+keywords: ["ROS 2", "core concepts", "robotics", "middleware"]
+sidebar_label: ROS 2 Core Concepts
+sidebar_position: 1
+slug: /modules/ros2/core-concepts
+---
+
+# Introduction to ROS 2 Core Concepts
+
+## Learning Objectives
+
+By the end of this chapter, you should be able to:
+- Understand the basic architecture of ROS 2.
+- Identify and describe core ROS 2 concepts such as Nodes, Topics, and Services.
+- Explain the role of `rclpy` in ROS 2 for Python development.
+
+## Introduction
+
+The Robot Operating System (ROS) has become the de facto standard for robotic software development. ROS 2, a significant evolution from its predecessor, offers improved performance, security, and support for a wider range of platforms and applications. This chapter will introduce you to the core concepts of ROS 2, providing the foundational knowledge necessary to build and understand complex robotic systems.
+
+## Key Concepts
+
+### Nodes
+
+In ROS 2, a **Node** is an executable that performs a specific task within the robotic system. Nodes are designed to be modular and single-purpose, allowing for easy development, debugging, and reuse of functionalities. For example, one node might be responsible for reading data from a laser scanner, another for controlling motors, and yet another for performing complex path planning. Nodes communicate with each other using various mechanisms provided by ROS 2.
+
+<CodeExample language="python"
+             explanation="This is a simple ROS 2 node written in Python using `rclpy`. It initializes the ROS client library, creates a node named `minimal_publisher`, and then spins the node to process callbacks.">
+{`import rclpy
+from rclpy.node import Node
+
+class MinimalPublisher(Node):
+    def __init__(self):
+        super().__init__('minimal_publisher')
+        # Node specific logic will go here
+
+def main(args=None):
+    rclpy.init(args=args)
+    minimal_publisher = MinimalPublisher()
+    rclpy.spin(minimal_publisher)
+    minimal_publisher.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+`}
+</CodeExample>
+
+
+### Topics
+
+**Topics** are the most common way for nodes to asynchronously exchange data. A topic is essentially a named bus over which nodes can send (`publish`) or receive (`subscribe`) messages. Messages are strongly typed data structures. When a node publishes a message to a topic, any node subscribed to that topic will receive the message. This publish-subscribe model enables decoupled communication, meaning nodes don't need to know about each other directly.
+
+<GlossaryTerm term="Publisher" definition="A ROS 2 node that sends messages on a topic." />
+<GlossaryTerm term="Subscriber" definition="A ROS 2 node that receives messages from a topic." />
+
+### Services
+
+**Services** in ROS 2 provide a request/response communication pattern, similar to a client-server interaction. When a node needs to request a specific operation from another node and wait for a response, it uses a service. This is particularly useful for operations that need to complete once, such as triggering a specific action (e.g., "take a picture") or querying a parameter (e.g., "get current robot status"). A service definition includes both the request and response message types.
+
+## rclpy Controllers
+
+`rclpy` is the Python client library for ROS 2. It provides the necessary APIs to write ROS 2 nodes, publishers, subscribers, and services in Python. `rclpy` abstracts away much of the underlying complexity of ROS 2's communication mechanisms, allowing developers to focus on the logic of their robotic applications. Controllers, in the context of `rclpy`, are often implemented as ROS 2 nodes that manage and execute specific behaviors or functionalities of a robot. They can subscribe to sensor data topics, publish commands to actuator topics, and provide services for higher-level control.
+
+<CodeExample language="python"
+             explanation="This `rclpy` controller example demonstrates a simple publisher that sends 'Hello World' messages at 1Hz. It inherits from `Node`, creates a publisher, and uses a timer to periodically publish messages.">
+{`import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+
+class MinimalPublisher(Node):
+    def __init__(self):
+        super().__init__('minimal_publisher')
+        self.publisher_ = self.create_publisher(String, 'topic', 10)
+        timer_period = 0.5  # seconds
+        self.timer = self.create_timer(timer_period, self.timer_callback)
+        self.i = 0
+
+    def timer_callback(self):
+        msg = String()
+        msg.data = 'Hello World: %d' % self.i
+        self.publisher_.publish(msg)
+        self.get_logger().info('Publishing: "%s"' % msg.data)
+        self.i += 1
+
+def main(args=None):
+    rclpy.init(args=args)
+    minimal_publisher = MinimalPublisher()
+    rclpy.spin(minimal_publisher)
+    minimal_publisher.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+`}
+</CodeExample>
+
+## Summary
+
+This chapter provided an essential introduction to ROS 2 core concepts, including the roles of nodes, topics, and services in building distributed robotic applications. We also explored `rclpy`, the Python client library, and how it facilitates the development of ROS 2 controllers. Understanding these fundamental building blocks is crucial for anyone looking to develop robust and scalable robotic systems with ROS 2.
+
+## References
+
+-   ROS 2 Documentation: [https://docs.ros.org/en/foxy/index.html](https://docs.ros.org/en/foxy/index.html)
+-   `rclpy` Documentation: [https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Writing-A-Simple-Publisher-And-Subscriber-Python.html](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Writing-A-Simple-Publisher-And-Subscriber-Python.html)
+
+<Exercise exerciseNumber={1} difficulty="Beginner" learningObjectiveRef="Understand basic ROS 2 communication patterns.">
+  <p>Create a simple ROS 2 publisher node that publishes integer messages to a topic named <code>/counter</code> at a rate of 1 Hz. Then, create a subscriber node that listens to the <code>/counter</code> topic and prints the received integer to the console.</p>
+  <p>Verify the communication using ROS 2 command-line tools like <code>ros2 topic echo /counter</code>.</p>
+</Exercise>
+
+

@@ -1,0 +1,144 @@
+---
+title: Gazebo for Digital Twins
+description: This chapter introduces Gazebo as a powerful tool for creating digital twins of robotic systems.
+keywords: ["Gazebo", "digital twin", "simulation", "robotics"]
+sidebar_label: Gazebo Digital Twins
+sidebar_position: 1
+slug: /modules/digital-twin/gazebo
+---
+
+# Gazebo for Digital Twins
+
+## Learning Objectives
+
+By the end of this chapter, you should be able to:
+- Understand the concept of a digital twin in robotics.
+- Utilize Gazebo for simulating robotic systems.
+- Configure physics, gravity, and collision properties within Gazebo.
+
+## Introduction
+
+In the world of robotics, developing and testing hardware can be time-consuming, expensive, and sometimes dangerous. Digital twins offer a solution by providing a virtual replica of a physical system, allowing for simulation, testing, and optimization in a safe and controlled environment. Gazebo is a powerful 3D robotics simulator that allows you to accurately and efficiently simulate complex robotic scenarios. This chapter will introduce you to using Gazebo to create and interact with digital twins of humanoid robots, focusing on essential simulation parameters like physics, gravity, and collision detection.
+
+## Key Concepts
+
+### Physics Simulation in Gazebo
+
+Gazebo's strength lies in its accurate physics engine, which allows robots to interact realistically with their environment. At its core, physics simulation involves solving equations of motion to determine how objects move and respond to forces. Gazebo integrates powerful physics engines like ODE, Bullet, Simbody, and DART, which can be configured to suit various simulation needs, from high-fidelity research to fast-paced testing.
+
+<CodeExample language="xml"
+             explanation="An example of configuring the physics engine in a Gazebo world file. This snippet sets the `ode` physics engine, iteration count, and update rates for accurate simulation.">
+{`<physics name="default_physics" default="0" type="ode">
+  <max_step_size>0.001</max_step_size>
+  <real_time_factor>1.0</real_time_factor>
+  <real_time_update_rate>1000</real_time_update_rate>
+  <ode>
+    <solver>
+      <type>quick</type>
+      <iters>50</iters>
+      <world_cfm>0</world_cfm>
+      <world_erp>0.2</world_erp>
+      <sor>1.3</sor>
+    </solver>
+    <constraints>
+      <cfm>0</cfm>
+      <erp>0.2</erp>
+      <contact_max_correcting_vel>100</contact_max_correcting_vel>
+      <contact_surface_layer>0.001</contact_surface_layer>
+    </constraints>
+  </ode>
+</physics>
+`}
+</CodeExample>
+
+
+### Gravity
+
+**Gravity** is a fundamental force in any realistic physics simulation. In Gazebo, you can configure the gravitational vector (e.g., `(0, 0, -9.8)` for Earth's gravity in the Z-direction) for your world. This ensures that objects fall, robots maintain contact with surfaces, and movements behave as expected under real-world gravitational forces. Adjusting gravity can also be useful for simulating environments with different gravitational pulls or for debugging purposes.
+
+### Collisions
+
+**Collisions** are critical for enabling robots to interact with their environment without passing through objects. In Gazebo, each link of a robot model and each object in the environment can have a defined collision geometry. This geometry, often a simplified representation of the visual model, is used by the physics engine to detect when objects are in contact. When a collision is detected, the physics engine calculates the forces and impulses required to prevent interpenetration, simulating realistic physical contact. Proper collision geometry definition is essential for stable and accurate simulations.
+
+### Sensors (LiDAR, Depth, IMU)
+
+Robots perceive their environment through a variety of sensors, and Gazebo provides robust support for simulating these essential components. Accurately simulated sensor data is crucial for developing and testing perception, navigation, and control algorithms without requiring physical hardware.
+
+-   **LiDAR (Light Detection and Ranging)**: LiDAR sensors measure distances to objects by emitting pulsed laser light and measuring the time it takes for the reflected light to return. In Gazebo, simulated LiDAR sensors generate point cloud data that mimics real-world LiDAR output, allowing robots to build 3D maps of their surroundings and detect obstacles.
+-   **Depth Cameras**: Depth cameras (like Intel RealSense or Microsoft Azure Kinect) provide both color (RGB) images and per-pixel depth information. Gazebo can simulate these cameras, generating realistic depth maps that are vital for tasks like object recognition, 3D reconstruction, and collision avoidance.
+-   **IMU (Inertial Measurement Unit)**: IMUs measure a robot's orientation, angular velocity, and linear acceleration. They typically consist of accelerometers and gyroscopes. Gazebo accurately simulates IMU data, which is fundamental for robot localization, balancing, and closed-loop control systems.
+
+<CodeExample language="xml"
+             explanation="An example of defining a simulated depth camera sensor in a Gazebo model. This XML snippet configures the camera's pose, image properties, and plugin for ROS 2 integration.">
+{`<sensor type="depth" name="head_camera_sensor">
+  <always_on>true</always_on>
+  <visualize>true</visualize>
+  <pose>0.1 0 0.05 0 0 0</pose>
+  <camera>
+    <horizontal_fov>1.047</horizontal_fov>
+    <image>
+      <width>640</width>
+      <height>480</height>
+      <format>R8G8B8</format>
+    </image>
+    <clip>
+      <near>0.1</near>
+      <far>10</far>
+    </clip>
+  </camera>
+  <plugin name="camera_controller" filename="libgazebo_ros_depth_camera.so">
+    <cameraName>head_camera</cameraName>
+    <frameName>head_camera_frame</frameName>
+    <hackBaseline>0.07</hackBaseline>
+    <distortionK1>0.0</distortionK1>
+    <distortionK2>0.0</distortionK2>
+    <distortionK3>0.0</distortionK3>
+    <distortionT1>0.0</distortionT1>
+    <distortionT2>0.0</distortionT2>
+    <pointCloudCutoff>0.5</pointCloudCutoff>
+    <Cx>320</Cx>
+    <Cy>240</Cy>
+    <focalLength>570</focalLength>
+    <pointCloudTopicName>depth/color/points</pointCloudTopicName>
+    <depthImageTopicName>depth/image_raw</depthImageTopicName>
+    <rangeImageTopicName>depth/range_image_raw</rangeImageTopicName>
+    <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+    <pointCloudCutoffMax>10.0</pointCloudCutoffMax>
+  </plugin>
+</sensor>
+`}
+</CodeExample>
+
+<RobotDiagram
+  diagramId="sensor-placement-diagram"
+  altText="Visual representation of sensor placement on a humanoid robot, showing locations for LiDAR, Depth Camera, and IMU."
+  filePath="/img/module2_chapter1_sensor_placement.png"
+  caption="Figure 2.1: Example sensor placement on a humanoid robot in Gazebo."
+/>
+
+## Summary
+
+This chapter introduced the concept of digital twins in robotics and demonstrated how Gazebo serves as a powerful simulation platform. We explored key simulation parameters including physics engine configuration, the role of gravity, and the importance of collision detection for realistic robot-environment interactions. Furthermore, we delved into the simulation of essential robot sensors like LiDAR, depth cameras, and IMUs, highlighting their significance for perception, navigation, and control development.
+
+## References
+
+-   Gazebo Documentation: [http://gazebosim.org/tutorials](http://gazebosim.org/tutorials)
+-   ROS 2 Gazebo Tutorials: [https://docs.ros.org/en/foxy/Tutorials/Simulators/Gazebo/Gazebo.html](https://docs.ros.org/en/foxy/Tutorials/Simulators/Gazebo/Gazebo.html)
+
+<Exercise exerciseNumber={1} difficulty="Beginner" learningObjectiveRef="Set up a basic Gazebo simulation environment.">
+  <p>Create a simple Gazebo world file that includes a ground plane and a cube. Configure the world's gravity to simulate conditions on the Moon (approximately 1.62 m/s²). Add a basic depth camera sensor to the cube and verify its output in Gazebo. You should be able to see the cube fall realistically and observe depth data if connected to ROS 2.</p>
+  <p>Verify the world and sensor configuration using Gazebo's GUI.</p>
+</Exercise>
+
+
+
+
+
+<GlossaryTerm term="LiDAR" definition="Light Detection and Ranging sensor; measures distance to a target by illuminating it with laser light and measuring the reflection." />
+<GlossaryTerm term="Depth Camera" definition="A camera that produces an image with depth information for each pixel, used for 3D perception." />
+<GlossaryTerm term="IMU" definition="Inertial Measurement Unit; a sensor that measures a body's specific force, angular rate, and often the orientation of the body." />
+
+
+<GlossaryTerm term="Digital Twin" definition="A virtual representation of a physical object or system, used for simulation, analysis, and monitoring." />
+<GlossaryTerm term="Gazebo" definition="A powerful 3D robotics simulator used for accurately simulating robots in complex indoor and outdoor environments." />
+

@@ -1,0 +1,41 @@
+.labContainer {
+  border: 2px solid var(--ifm-color-primary);
+  border-radius: var(--ifm-global-radius);
+  margin: 2rem 0;
+  background-color: var(--ifm-background-surface-color);
+}
+
+.labHeader {
+  background-color: var(--ifm-color-primary);
+  color: var(--ifm-color-on-primary);
+  padding: 1rem 1.5rem;
+  border-top-left-radius: var(--ifm-global-radius);
+  border-top-right-radius: var(--ifm-global-radius);
+}
+
+.labHeader h3 {
+  margin: 0;
+  color: var(--ifm-color-on-primary);
+}
+
+.labBody {
+  padding: 1rem 1.5rem;
+}
+
+.section {
+  margin-bottom: 1.5rem;
+}
+
+.section h4 {
+  margin-bottom: 0.5rem;
+  color: var(--ifm-color-primary-dark);
+}
+
+.section ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.section li {
+  margin-bottom: 0.25rem;
+}

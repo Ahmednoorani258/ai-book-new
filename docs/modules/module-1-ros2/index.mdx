@@ -1,0 +1,45 @@
+---
+title: "Module 1: The Robotic Nervous System (ROS 2)"
+description: Introduction to the Robotic Operating System 2 (ROS 2) and its core concepts.
+keywords: ["ROS 2", "robotics", "nervous system", "module introduction"]
+sidebar_label: "Module 1 - ROS 2"
+sidebar_position: 1
+slug: /modules/ros2
+---
+
+# Module 1: The Robotic Nervous System (ROS 2)
+
+## Introduction
+
+Welcome to Module 1 of the Physical AI & Humanoid Robotics Textbook! In this module, we will dive into the Robotic Operating System 2 (ROS 2), the foundational middleware for developing complex robotic applications. Often referred to as the "nervous system" of a robot, ROS 2 provides the communication infrastructure, tools, and libraries necessary to integrate various hardware components and software algorithms into a cohesive system.
+
+## Prerequisites
+
+Before starting this module, it is recommended that you have:
+- Basic understanding of Python programming.
+- Familiarity with command-line interfaces.
+- Fundamental knowledge of robotics concepts (optional but helpful).
+
+## Concept Map
+
+(Placeholder for a concept map image or diagram)
+
+## Practical Assignments
+
+This module includes practical lab assignments to reinforce your understanding. These will be presented as `ri.LabTask` components within the chapters.
+
+<LabTask
+  labId="mod1-lab1"
+  title="ROS 2 Basics Exploration"
+  objective="Explore the core communication mechanisms of ROS 2 through practical exercises involving nodes, topics, and services."
+  prerequisites={["Chapter 1: Introduction to ROS 2 Core Concepts"]}
+  equipment={["Computer with Ubuntu 20.04+", "ROS 2 Foxy/Humble installed"]}
+  steps={[
+    "Setup a ROS 2 workspace.",
+    "Create a publisher node that sends string messages.",
+    "Create a subscriber node that receives and prints string messages.",
+    "Implement a simple ROS 2 service client and server.",
+  ]}
+  deliverables={["ROS 2 package with publisher, subscriber, and service nodes.", "Screenshot of nodes communicating via command-line tools."]}
+  assessmentCriteria="Correct implementation of ROS 2 communication patterns and verification using ROS 2 command-line tools."
+/>

@@ -1,0 +1,98 @@
+---
+title: Human-Robot Interaction in Unity
+description: This chapter explores Human-Robot Interaction (HRI) using the Unity game engine.
+keywords: ["Unity", "HRI", "human-robot interaction", "simulation"]
+sidebar_label: Unity HRI
+sidebar_position: 2
+slug: /modules/digital-twin/unity-hri
+---
+
+# Human-Robot Interaction in Unity
+
+## Learning Objectives
+
+By the end of this chapter, you should be able to:
+- Understand the role of Unity in Human-Robot Interaction (HRI) simulations.
+- Implement basic interaction mechanisms between a human user and a simulated robot in Unity.
+- Integrate ROS 2 communication with Unity for bidirectional control and feedback.
+
+## Introduction
+
+Human-Robot Interaction (HRI) is a rapidly evolving field focused on designing and understanding interactions between humans and robots. As robots become more prevalent in our daily lives, intuitive and effective HRI becomes critical. The Unity game engine, with its powerful 3D rendering, physics, and scripting capabilities, offers an excellent platform for simulating complex HRI scenarios. This chapter will explore how Unity can be leveraged to create rich, interactive digital twins where humans can safely and intuitively interact with simulated humanoid robots.
+
+## Key Concepts
+
+### Unity for Human-Robot Interaction
+
+Unity is a cross-platform game engine renowned for its 3D rendering capabilities, robust physics engine, and extensive asset store. These features make it an ideal platform for simulating and prototyping Human-Robot Interaction (HRI). In HRI, Unity can be used to:
+
+-   **Visualize Robot Behavior**: Create realistic 3D models of robots and their environments, allowing for intuitive visualization of robot movements, sensor data, and operational status.
+-   **Develop User Interfaces**: Design interactive graphical user interfaces (GUIs) within the simulated environment or as external applications to control robots, provide commands, and receive feedback.
+-   **Simulate Human Presence**: Implement basic human models or avatars to test human-robot collaboration scenarios, observe spatial interactions, and evaluate safety protocols.
+-   **Integrate with Robotics Middleware**: Utilize tools and packages (e.g., ROS-Unity integration packages) to establish communication between Unity simulations and robotics frameworks like ROS 2, enabling real-time control and data exchange.
+
+By leveraging Unity, developers can create rich, immersive HRI experiences that facilitate both research and practical application development, ultimately leading to more intuitive and safer human-robot collaborative systems.
+
+<CodeExample language="csharp"
+             explanation="A basic Unity C# script that allows a user to move a robot (represented by a GameObject) forward and turn left/right using keyboard input. This demonstrates fundamental user control in a simulated HRI environment.">
+{`using UnityEngine;
+
+public class SimpleRobotController : MonoBehaviour
+{
+    public float moveSpeed = 5.0f;
+    public float rotateSpeed = 100.0f;
+
+    void Update()
+    {
+        // Move forward/backward
+        if (Input.GetKey(KeyCode.W))
+        {
+            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
+        }
+
+        // Rotate left/right
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.Rotate(Vector3.up, -rotateSpeed * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.Rotate(Vector3.up, rotateSpeed * Time.deltaTime);
+        }
+    }
+}
+`}
+</CodeExample>
+
+<RobotDiagram
+  diagramId="unity-hri-scene"
+  altText="Visual representation of a Unity scene setup for human-robot interaction, showing a human avatar, a robot model, and interactive elements."
+  filePath="/img/module2_chapter2_unity_hri.png"
+  caption="Figure 2.2: Example Unity HRI scene setup with human and robot models."
+/>
+
+## Summary
+
+This chapter explored the capabilities of the Unity game engine for Human-Robot Interaction (HRI) simulations. We discussed how Unity's powerful 3D rendering, physics, and scripting functionalities make it an ideal platform for visualizing robot behavior, developing interactive user interfaces, and simulating human presence in robotic scenarios. The integration with robotics middleware like ROS 2 further enhances Unity's utility for real-time control and data exchange in HRI applications.
+
+## References
+
+-   Unity Documentation: [https://docs.unity3d.com/Manual/index.html](https://docs.unity3d.com/Manual/index.html)
+-   ROS-Unity Integration: [https://github.com/Unity-Technologies/ROS-TCP-Connector](https://github.com/Unity-Technologies/ROS-TCP-Connector)
+
+<Exercise exerciseNumber={1} difficulty="Intermediate" learningObjectiveRef="Develop a basic human-robot interaction scene in Unity.">
+  <p>Create a Unity 3D project that includes a simple robot model (e.g., a cube with a cylindrical "head") and a basic environment (e.g., a plane). Implement a C# script that allows the user to control the robot's movement and rotation using keyboard inputs. Additionally, add a simple UI element (e.g., a text display) that shows the robot's current status or a message from the user.</p>
+  <p>Bonus: Integrate a basic ROS 2 publisher from Unity that sends the robot's position data to a ROS 2 topic.</p>
+</Exercise>
+
+
+
+
+
+<GlossaryTerm term="Human-Robot Interaction (HRI)" definition="The study of interactions between humans and robots, focusing on design, understanding, and evaluation." />
+<GlossaryTerm term="Unity" definition="A cross-platform game engine used for developing 2D/3D games and simulations, including robotics and HRI." />
+

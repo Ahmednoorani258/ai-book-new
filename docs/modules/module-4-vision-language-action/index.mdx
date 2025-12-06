@@ -1,0 +1,63 @@
+---
+title: "Module 4: Vision–Language–Action (VLA)"
+description: Explore Vision-Language-Action (VLA) systems for intelligent robot interaction and planning.
+keywords: ["VLA", "vision-language-action", "robotics", "AI", "LLM", "module introduction"]
+sidebar_label: "Module 4 - VLA"
+sidebar_position: 4
+slug: /modules/vla
+---
+
+# Module 4: Vision–Language–Action (VLA)
+
+## Introduction
+
+Welcome to Module 4 of the Physical AI & Humanoid Robotics Textbook! This module explores the cutting-edge field of **Vision–Language–Action (VLA) systems**, where robots integrate visual perception, language understanding, and complex action generation to interact with the world. We will delve into how advancements in Large Language Models (LLMs) are enabling robots to interpret nuanced human commands, perform multi-step planning, and even engage in conversational interactions. This module culminates in a conceptual **Capstone Project**, challenging you to design an end-to-end autonomous humanoid pipeline that synthesizes all the knowledge acquired throughout the textbook.
+
+## Prerequisites
+
+Before starting this module, it is recommended that you have:
+- A solid understanding of ROS 2 core concepts (from Module 1).
+- Familiarity with simulation environments (from Module 2).
+- Basic understanding of AI and machine learning concepts.
+
+## Concept Map
+
+(Placeholder for a concept map image or diagram detailing the relationship between Vision, Language, Action, LLMs, and robotics)
+
+## Practical Assignments
+
+This module includes practical lab assignments and a conceptual capstone project to reinforce your understanding.
+
+<LabTask
+  labId="mod4-lab1"
+  title="VLA System for Simple Object Manipulation"
+  objective="Implement a conceptual VLA system for a simulated robot to perform simple object manipulation tasks based on natural language commands."
+  prerequisites={["Chapter 1: Vision-Language-Action Systems"]}
+  equipment={["Simulated robot in Isaac Sim or Gazebo", "Python environment with LLM API access (e.g., OpenAI, Hugging Face)"]}
+  steps={[
+    "Set up a simulated environment with a robot arm and several objects.",
+    "Develop a Python script that takes a natural language command (e.g., 'pick up the red cube').",
+    "Integrate an LLM to parse the command and generate a sequence of robot actions.",
+    "Execute the generated actions in the simulator to achieve the goal.",
+  ]}
+  deliverables={["Python script for VLA system.", "Video demonstration of the robot executing commands.", "Report on LLM parsing accuracy."]}
+  assessmentCriteria="Successful interpretation of commands and execution of corresponding actions in simulation."
+/>
+
+<CapstoneMilestone
+  milestoneId="mod4-capstone"
+  title="Autonomous Humanoid Pipeline Design"
+  description="Design a comprehensive pipeline for an autonomous humanoid robot that can perceive, understand, plan, and act in a human-centric environment based on complex natural language commands."
+  objectives={[
+    "Outline the full architecture of the autonomous humanoid pipeline.",
+    "Detail the integration points between perception, language processing, planning, and control modules.",
+    "Identify key technologies and algorithms for each component.",
+  ]}
+  deliverables={[
+    "Detailed system architecture diagram.",
+    "Component breakdown and technology stack.",
+    "Conceptual flow diagram of command interpretation to action execution.",
+    "Presentation outlining the design and challenges."
+  ]}
+  evaluationMetrics="Completeness and coherence of the design; feasibility of the proposed solutions; depth of understanding demonstrated."
+/>

@@ -1,0 +1,65 @@
+.exerciseContainer {
+  border: 1px solid var(--ifm-color-primary-dark);
+  border-radius: var(--ifm-global-radius);
+  margin: 1.5rem 0;
+  padding: 1rem;
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.exerciseHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.difficulty {
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--ifm-global-radius);
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.beginner {
+  background-color: var(--ifm-color-success-light);
+  color: var(--ifm-color-success-dark);
+}
+
+.intermediate {
+  background-color: var(--ifm-color-warning-light);
+  color: var(--ifm-color-warning-dark);
+}
+
+.advanced {
+  background-color: var(--ifm-color-danger-light);
+  color: var(--ifm-color-danger-dark);
+}
+
+.exerciseBody {
+  margin-bottom: 1rem;
+}
+
+.learningObjective {
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-600);
+  margin-top: 1rem;
+}
+
+.solutionContainer {
+  margin-top: 1rem;
+}
+
+.solutionContainer summary {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.solutionBody {
+  margin-top: 0.5rem;
+  padding: 1rem;
+  background-color: var(--ifm-background-color-secondary);
+  border-radius: var(--ifm-global-radius);
+}
