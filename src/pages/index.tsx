@@ -2,6 +2,7 @@ import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import Layout from '@theme/Layout';
 // import HomepageFeatures from '@site/src/components/HomepageFeatures'; // Removed
 import Heading from '@theme/Heading';
@@ -22,7 +23,7 @@ function HomepageHeader() {
         </p>
         <div className={styles.buttons}>
           <Link
-            className="button button--secondary button--lg"
+            className="button button--secondary button--lg margin-right--md"
             to="/docs">
             Start Reading the Textbook 📖
           </Link>
@@ -40,7 +41,7 @@ function HomepageHeader() {
 // HomepageCTA Component (placeholder for now)
 function HomepageCTA() {
   return (
-    <section className={styles.ctaSection}>
+    <section className={styles.ctaSection} >
       <div className="container text--center">
         <Heading as="h2" className="hero__title">
           Ready to Build the Future of AI?
@@ -73,7 +74,7 @@ function HomepageRoadmap() {
         </p>
         <div className={styles.roadmapVisual}>
           {/* Placeholder for actual roadmap visual */}
-          <img src="/img/roadmap_placeholder.svg" alt="Course Roadmap Placeholder" />
+          <img src={useBaseUrl('/img/roadmap_placeholder.svg')} alt="Course Roadmap Placeholder" />
         </div>
         <div className={styles.buttons}>
           <Link
@@ -110,7 +111,7 @@ function HomepageAbout() {
             </Link>
           </div>
           <div className="col col--6">
-            <img src="/img/physical_ai_concept.svg" alt="Physical AI Concept" className={styles.aboutImage} />
+            <img src={useBaseUrl('/img/physical_ai_concept.svg')} alt="Physical AI Concept" className={styles.aboutImage} />
           </div>
         </div>
       </div>
@@ -151,7 +152,7 @@ function HomepageModules() {
                 <h3>Module 1: The Robotic Nervous System (ROS 2)</h3>
               </div>
               <div className="card__body">
-                <p>Master ROS 2 core concepts, URDF modeling, and build the communication backbone of robots.</p>
+                <p>Master ROS 2 concepts, URDF modeling, and build the communication backbone of robots.</p>
               </div>
               <div className="card__footer">
                 <Link className="button button--secondary" to="/docs/modules/ros2">View Module</Link>
@@ -215,10 +216,10 @@ export default function Home(): ReactNode {
       description="The Embodied Intelligence Textbook - Physical AI & Humanoid Robotics">
       <HomepageHeader />
       <main>
-        <HomepageCTA /> {/* Added CTA component */}
-        <HomepageRoadmap /> {/* Added Roadmap component */}
-        <HomepageAbout /> {/* Added About component */}
-        <HomepageModules /> {/* Added Modules component */}
+        <HomepageCTA />
+        <HomepageRoadmap />
+        <HomepageAbout />
+        <HomepageModules />
       </main>
     </Layout>
   );

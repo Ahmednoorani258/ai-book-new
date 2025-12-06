@@ -1,266 +1,304 @@
-/* Landing Page Styles */
+/* ============================================================
+   🔥 Modern Enhanced Landing Page Styles for Docusaurus
+   Sleek, animated, premium, responsive
+=============================================================== */
 
-/* Hero Section */
+
+/* ------------------------------------------
+   HERO SECTION
+-------------------------------------------*/
 .heroBanner {
-  padding: var(--ifm-spacing-vertical) 0; /* Use Docusaurus spacing variable */
+  padding: calc(var(--ifm-spacing-vertical) * 1.8) 0;
   text-align: center;
   position: relative;
   overflow: hidden;
-  background-color: var(--ifm-background-color);
-  color: var(--ifm-font-color-base);
+  background: linear-gradient(
+    135deg,
+    var(--ifm-color-primary-lighter) 0%,
+    var(--ifm-background-color) 40%
+  );
+  animation: fadeIn 1.2s ease-in-out;
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: var(--ifm-spacing-vertical) 0.5rem;
-  }
+.heroBanner::before {
+  /* subtle animated gradient swirl */
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    circle,
+    var(--ifm-color-primary-lightest) 0%,
+    transparent 70%
+  );
+  top: -150px;
+  left: -150px;
+  opacity: 0.5;
+  filter: blur(60px);
+  animation: floating 8s ease-in-out infinite;
 }
 
-.heroBanner .hero__title {
+.hero__title {
+  font-size: 3.5rem;
+  font-weight: 800;
   color: var(--ifm-color-primary-darkest);
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
+  letter-spacing: -1px;
+  animation: slideUp 1s ease-in-out;
 }
 
-[data-theme='dark'] .heroBanner .hero__title {
-  color: var(--ifm-color-primary-darker);
+[data-theme='dark'] .hero__title {
+  color: var(--ifm-color-primary-lightest);
 }
 
-.heroBanner .hero__subtitle {
-  color: var(--ifm-font-color-secondary);
-  font-size: 1.25rem;
-  max-width: 800px;
-  margin: 0 auto 2rem auto; /* Center subtitle */
+.hero__subtitle {
+  font-size: 1.3rem;
+  max-width: 900px;
+  margin: 0 auto 2.5rem auto;
+  color: var(--ifm-font-on-secondary);
+  animation: fadeIn 1.8s ease-in-out;
 }
 
 .heroBanner .buttons {
   display: flex;
   justify-content: center;
-  gap: 1.5rem; /* Increased gap for modern feel */
-  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+  gap: 1.7rem;
+  flex-wrap: wrap;
+  animation: fadeIn 2s ease-in-out;
 }
 
-/* CTA Section */
+.heroBanner .button {
+  padding: 0.8rem 1.8rem;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  transition: 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.heroBanner .button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+}
+
+
+/* ------------------------------------------
+   CTA SECTION
+-------------------------------------------*/
 .ctaSection {
-  padding: var(--ifm-spacing-vertical) 0;
-  background-color: var(--ifm-color-primary-dark);
+  padding: 4rem 0;
+  background: linear-gradient(
+    150deg,
+    var(--ifm-color-primary-darkest),
+    var(--ifm-color-primary-darker)
+  );
+  text-align: center;
   color: var(--ifm-color-on-primary);
-  text-align: center; /* Ensure text is centered */
+  animation: fadeIn 1.4s ease-in-out;
+  border-radius: 0 0 40px 40px;
 }
 
 .ctaSection .hero__title {
-  color: var(--ifm-color-on-primary);
-  margin-bottom: 1rem;
+  font-size: 2.7rem;
+  margin-bottom: 1.2rem;
 }
 
 .ctaSection .hero__subtitle {
-  color: var(--ifm-color-on-primary-dark);
   max-width: 700px;
-  margin: 0 auto 2rem auto; /* Center subtitle */
+  margin: 0 auto 3rem auto;
+  font-size: 1.15rem;
+  opacity: 0.9;
 }
 
-/* Roadmap Section */
+
+/* ------------------------------------------
+   ROADMAP SECTION
+-------------------------------------------*/
 .roadmapSection {
-  padding: var(--ifm-spacing-vertical) 0;
-  background-color: var(--ifm-background-color);
-  color: var(--ifm-font-color-base);
+  padding: 4rem 0;
   text-align: center;
+  animation: fadeIn 1.4s ease-in-out;
 }
 
 .roadmapSection .hero__title {
-  color: var(--ifm-color-primary-darkest);
-  margin-bottom: 1rem;
-}
-
-[data-theme='dark'] .roadmapSection .hero__title {
-  color: var(--ifm-color-primary-darker);
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 1.6rem;
 }
 
 .roadmapSection .hero__subtitle {
-  color: var(--ifm-font-color-secondary);
   max-width: 800px;
-  margin: 0 auto 3rem auto; /* Center subtitle */
-}
-
-.roadmapVisual {
-  margin: 0 auto 3rem auto; /* Center and provide space */
-  max-width: 100%;
-  height: auto;
-  display: block; /* Ensure it behaves as a block element for margin:auto */
+  margin: 0 auto 3.5rem;
 }
 
 .roadmapVisual img {
   max-width: 100%;
-  height: auto;
+  border-radius: 14px;
+  box-shadow: var(--ifm-global-shadow-lg);
+  transition: transform 0.4s ease;
 }
 
-/* About Section */
+.roadmapVisual:hover img {
+  transform: scale(1.02);
+}
+
+
+/* ------------------------------------------
+   ABOUT SECTION
+-------------------------------------------*/
 .aboutSection {
-  padding: var(--ifm-spacing-vertical) 0;
-  background-color: var(--ifm-background-surface-color);
-  color: var(--ifm-font-color-base);
+  padding: 4rem 0;
+  text-align: center;
 }
 
 .aboutSection .hero__title {
-  color: var(--ifm-color-primary-darkest);
-  margin-bottom: 1rem;
-}
-
-[data-theme='dark'] .aboutSection .hero__title {
-  color: var(--ifm-color-primary-darker);
-}
-
-.aboutSection .row {
-  align-items: center; /* Vertically align items in the row */
+  font-size: 2.7rem;
+  margin-bottom: 2rem;
 }
 
 .aboutImage {
   max-width: 100%;
-  height: auto;
-  border-radius: var(--ifm-global-radius);
-  box-shadow: var(--ifm-global-shadow-md);
-  display: block; /* Ensure it behaves as a block element */
-  margin: 0 auto; /* Center image if column is wider */
+  border-radius: 16px;
+  box-shadow: var(--ifm-global-shadow-lg);
+  transition: 0.4s ease;
 }
 
-/* Modules Section */
+.aboutImage:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--ifm-global-shadow-xl);
+}
+
+
+/* ------------------------------------------
+   MODULES SECTION
+-------------------------------------------*/
 .modulesSection {
-  padding: var(--ifm-spacing-vertical) 0;
-  background-color: var(--ifm-color-primary-light);
-  color: var(--ifm-color-on-primary);
+  padding: 4rem 0;
   text-align: center;
+  background: linear-gradient(
+    160deg,
+    var(--ifm-color-primary-darkest),
+    var(--ifm-color-primary)
+  );
+  color: var(--ifm-color-on-primary);
+  border-radius: 40px 40px 0 0;
 }
 
 .modulesSection .hero__title {
-  color: var(--ifm-color-on-primary);
-  margin-bottom: 1rem;
-}
-
-.modulesSection .hero__subtitle {
-  color: var(--ifm-color-on-primary-dark);
-  max-width: 800px;
-  margin: 0 auto 3rem auto; /* Center subtitle */
+  font-size: 2.8rem;
+  margin-bottom: 1.7rem;
 }
 
 .modulesSection .row {
-  display: flex; /* Ensure flex behavior */
-  flex-wrap: wrap; /* Allow cards to wrap */
-  justify-content: center; /* Center cards if not full width */
-  gap: var(--ifm-spacing-horizontal); /* Consistent gap between cards */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
 }
 
+/* --- Module Card (Improved Glassmorphism + animations) --- */
+
 .moduleCard {
-  height: 100%; /* Ensure cards are same height */
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  padding: 0;
+  border-radius: 18px;
+  width: 280px;
+  min-height: 330px;
+  box-shadow: var(--ifm-global-shadow-md);
+  transition: 0.4s ease;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  background-color: var(--ifm-background-color);
-  color: var(--ifm-font-color-base);
-  border-radius: var(--ifm-global-radius);
-  box-shadow: var(--ifm-global-shadow-md);
-  transition: all 0.3s ease-in-out;
-  flex: 1 1 calc(33% - var(--ifm-spacing-horizontal) * 2 / 3); /* Distribute cards */
-  max-width: 300px; /* Limit card width */
+}
+
+[data-theme='dark'] .moduleCard {
+  background: rgba(0, 0, 0, 0.35);
 }
 
 .moduleCard:hover {
-  box-shadow: var(--ifm-global-shadow-lg);
-  transform: translateY(-5px);
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: var(--ifm-global-shadow-xl);
 }
 
 .moduleCard .card__header {
   padding: 1rem;
-  background-color: var(--ifm-background-surface-color);
-  border-bottom: 1px solid var(--ifm-border-color);
-  border-top-left-radius: var(--ifm-global-radius);
-  border-top-right-radius: var(--ifm-global-radius);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .moduleCard .card__header h3 {
-  font-size: 1.25rem;
-  margin-bottom: 0;
-  color: var(--ifm-color-primary-darkest);
+  font-size: 1.3rem;
+  color: var(--ifm-color-primary-lightest);
 }
 
 .moduleCard .card__body {
-  flex-grow: 1; /* Allows body to expand and push footer down */
   padding: 1rem;
-  text-align: left;
+  color: var(--ifm-font-color-base);
+  flex-grow: 1;
 }
 
 .moduleCard .card__body p {
   font-size: 0.95rem;
-  color: var(--ifm-font-color-secondary);
-  margin-bottom: 0.5rem;
+  opacity: 0.9;
 }
 
 .moduleCard .card__footer {
   padding: 1rem;
-  border-top: 1px solid var(--ifm-border-color);
   text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 
-/* Responsive Adjustments for Smaller Screens */
+/* Hover Button in Card */
+.moduleCard .button {
+  transition: 0.3s ease;
+}
+
+.moduleCard .button:hover {
+  transform: translateY(-3px);
+  opacity: 0.9;
+}
+
+
+/* ------------------------------------------
+   ANIMATIONS
+-------------------------------------------*/
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floating {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(40px, 30px); }
+}
+
+
+/* ------------------------------------------
+   RESPONSIVE DESIGN
+-------------------------------------------*/
 @media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: var(--ifm-spacing-vertical) 1rem; /* Adjust padding for medium screens */
+  .hero__title {
+    font-size: 2.7rem;
   }
-  .heroBanner .hero__title {
-    font-size: 2.5rem;
-  }
-  .heroBanner .hero__subtitle {
-    font-size: 1.1rem;
-  }
-  .heroBanner .buttons {
-    gap: 1rem;
-  }
-  .aboutSection .col--6 {
-    flex: 0 0 100%; /* Stack columns on smaller screens */
-    max-width: 100%;
-  }
-  .aboutSection .col--6:first-child {
-    margin-bottom: 2rem;
-  }
-  .modulesSection .moduleCard {
-    flex: 1 1 calc(50% - var(--ifm-spacing-horizontal) / 2); /* Two cards per row */
+  .moduleCard {
+    width: 90%;
+    max-width: 350px;
   }
 }
 
 @media screen and (max-width: 768px) {
-  .heroBanner .hero__title {
-    font-size: 2rem;
+  .hero__title {
+    font-size: 2.2rem;
   }
-
-  .heroBanner .hero__subtitle {
-    font-size: 0.9rem;
-  }
-
-  .heroBanner .buttons {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .ctaSection,
-  .roadmapSection,
-  .aboutSection,
-  .modulesSection {
-    padding: var(--ifm-spacing-vertical) 0.5rem;
-  }
-
-  .modulesSection .moduleCard {
-    flex: 1 1 100%; /* Stack module cards vertically */
-    max-width: 100%;
-  }
-
-  .moduleCard {
-    margin-bottom: 1rem;
-  }
-
-  .moduleCard .card__header h3 {
+  .hero__subtitle {
     font-size: 1rem;
   }
-
-  .moduleCard .card__body p {
-    font-size: 0.85rem;
+  .modulesSection {
+    padding: 3rem 1rem;
   }
 }
