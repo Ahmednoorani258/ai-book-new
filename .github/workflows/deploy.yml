@@ -4,7 +4,7 @@ on:
  branches:
  - main
  - master
-jobs:
+ jobs:
  build:
  name: Build Docusaurus
  runs-on: ubuntu-latest
