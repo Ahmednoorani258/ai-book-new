@@ -1,4 +1,6 @@
 import {themes as prismThemes} from 'prism-react-renderer';
+
+
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
@@ -51,7 +53,7 @@ const config: Config = {
       title: 'Physical AI & Humanoid Robotics',
       logo: {
         alt: 'Physical AI Logo',
-        src: 'img/logo.svg',
+        src: 'img/logo.png',
       },
       items: [
         {
@@ -74,23 +76,44 @@ const config: Config = {
         {
           title: 'Modules',
           items: [
-            // Links to be added as content is created
+            {
+              label: 'Foundational AI Principles',
+              to: '/docs/modules/intro-physical-ai/embodiment',
+            },
+            {
+              label: 'ROS 2',
+              to: '/docs/modules/ros2',
+            },
+            {
+              label: 'Digital Twin',
+              to: '/docs/modules/digital-twin',
+            },
+            {
+              label: 'NVIDIA Isaac',
+              to: '/docs/modules/isaac',
+            },
+            {
+              label: 'Vision–Language–Action',
+              to: '/docs/modules/vla',
+            },
           ],
         },
         {
           title: 'Community',
           items: [
-            // Links to be added later
+            {
+              label: 'GitHub Discussions',
+              href: 'https://github.com/Ahmednoorani258/ai-book-new/discussions',
+            },
           ],
         },
         {
           title: 'More',
           items: [
-            // TODO: Add link to GitHub repo when public
-            // {
-            //   label: 'GitHub',
-            //   href: 'https://github.com/your-org/ai-book-new',
-            // },
+            {
+              label: 'GitHub',
+              href: 'https://github.com/Ahmednoorani258/ai-book-new',
+            },
           ],
         },
       ],
