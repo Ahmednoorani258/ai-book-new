@@ -18,7 +18,8 @@ export default function ChatWidget() {
     const formData = new FormData();
     formData.append("query", newMessage.text);
 
-    const res = await fetch("https://ai-book-backend-4f6e.onrender.com/chat", {
+    // const res = await fetch("https://ai-book-backend-4f6e.onrender.com/chat", {
+    const res = await fetch("http://127.0.0.1:8000/chat", {
       method: "POST",
       body: formData,
     });
