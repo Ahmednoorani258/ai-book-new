@@ -26,6 +26,8 @@ const config: Config = {
     locales: ['en'],
   },
 
+  clientModules: [require.resolve('./src/client-modules/injectReact.js')],
+
   presets: [
     [
       'classic',

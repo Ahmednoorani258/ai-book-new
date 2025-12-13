@@ -1,0 +1,148 @@
+openapi: 3.0.0
+info:
+  title: User Profile API
+  version: 1.0.0
+  description: API for managing user profiles and questionnaire data for content personalization.
+
+servers:
+  - url: /api/v1
+    description: Base API URL
+
+paths:
+  /users/{userId}/profile:
+    get:
+      summary: Get User Profile
+      operationId: getUserProfile
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: Unique identifier of the user.
+      responses:
+        '200':
+          description: User profile retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+        '401':
+          description: Unauthorized.
+        '404':
+          description: User or profile not found.
+    put:
+      summary: Update User Profile
+      operationId: updateUserProfile
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: Unique identifier of the user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileUpdate'
+      responses:
+        '200':
+          description: User profile updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+        '400':
+          description: Invalid input.
+        '401':
+          description: Unauthorized.
+        '404':
+          description: User or profile not found.
+
+  /register:
+    post:
+      summary: Register New User with Profile
+      operationId: registerUserWithProfile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistration'
+      responses:
+        '201':
+          description: User registered and profile created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRegistrationResponse'
+        '440':
+          description: Invalid input or user already exists.
+
+components:
+  schemas:
+    Profile:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the profile.
+          readOnly: true
+        userId:
+          type: string
+          description: Unique identifier for the associated user.
+          readOnly: true
+        experienceLevel:
+          type: string
+          enum: [beginner, intermediate, expert]
+          description: User's experience level with software development and robotics.
+      required:
+        - id
+        - userId
+        - experienceLevel
+
+    ProfileUpdate:
+      type: object
+      properties:
+        experienceLevel:
+          type: string
+          enum: [beginner, intermediate, expert]
+          description: User's updated experience level.
+      required:
+        - experienceLevel
+
+    UserRegistration:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: User's email address.
+        password:
+          type: string
+          format: password
+          description: User's chosen password.
+        experienceLevel:
+          type: string
+          enum: [beginner, intermediate, expert]
+          description: User's initial experience level from the questionnaire.
+      required:
+        - email
+        - password
+        - experienceLevel
+
+    UserRegistrationResponse:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: Unique identifier of the newly registered user.
+        message:
+          type: string
+          description: Confirmation message.
+      required:
+        - userId
+        - message
