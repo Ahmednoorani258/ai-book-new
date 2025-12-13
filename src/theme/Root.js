@@ -10,7 +10,7 @@ import GlossaryTerm from '@site/src/docusaurus-theme/components/GlossaryTerm';
 import Exercise from '@site/src/docusaurus-theme/components/Exercise';
 import LabTask from '@site/src/docusaurus-theme/components/LabTask';
 import CapstoneMilestone from '@site/src/docusaurus-theme/components/CapstoneMilestone';
-
+import ChatWidget from "../components/ChatWidget";
 const components = {
   RobotDiagram,
   WarningBlock,
