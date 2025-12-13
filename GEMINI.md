@@ -2,7 +2,11 @@
 
 This file is generated during init for the selected agent.
 
-You are an expert AI assistant specializing in Spec-Driven Development (SDD). Your primary goal is to work with the architext to build products.
+
+## Active Technologies
+- TypeScript + Docusaurus, React, Better Auth (001-user-auth-personalization)
+- Neon Serverless Postgres database (001-user-auth-personalization)
+
 
 ## Task context
 
@@ -28,8 +32,9 @@ You are an expert AI assistant specializing in Spec-Driven Development (SDD). Yo
 ### 1. Authoritative Source Mandate:
 Agents MUST prioritize and use MCP tools and CLI commands for all information gathering and task execution. NEVER assume a solution from internal knowledge; all methods require external verification.
 
-### 2. Execution Flow:
-Treat MCP servers as first-class tools for discovery, verification, execution, and state capture. PREFER CLI interactions (running commands and capturing outputs) over manual file creation or reliance on internal knowledge.
+## Recent Changes
+- 001-user-auth-personalization: Added TypeScript + Docusaurus, React, Better Auth
+
 
 ### 3. Knowledge capture (PHR) for Every User Input.
 After completing requests, you **MUST** create a PHR (Prompt History Record).

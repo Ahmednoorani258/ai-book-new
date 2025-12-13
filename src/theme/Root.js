@@ -1,5 +1,6 @@
 import React from 'react';
 import {MDXProvider} from '@mdx-js/react';
+import { AuthProvider } from '../contexts/AuthContext'; // Adjust path as necessary
 
 // Import your custom components
 import RobotDiagram from '@site/src/docusaurus-theme/components/RobotDiagram';
@@ -22,9 +23,10 @@ const components = {
 
 export default function Root({children}) {
   return (
-    <MDXProvider components={components}>
-      {children}
-      <ChatWidget />
-    </MDXProvider>
+    <AuthProvider>
+      <MDXProvider components={components}>
+        {children}
+      </MDXProvider>
+    </AuthProvider>
   );
 }
