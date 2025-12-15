@@ -2,6 +2,33 @@ import { Router } from 'express';
 import { AuthService } from '../services/authService';
 import { auth } from '../auth'; // Import auth from Better Auth
 
+interface BetterAuthUser {
+  id: string;
+  email: string;
+  name?: string;
+  image?: string;
+}
+
+interface BetterAuthSession {
+  token: string;
+  userId: string;
+  expiresAt: number;
+}
+
+interface BetterAuthSignUpResponse {
+  user?: BetterAuthUser;
+  session?: BetterAuthSession;
+  message?: string;
+  error?: string;
+}
+
+interface BetterAuthSignInResponse {
+  user?: BetterAuthUser;
+  session?: BetterAuthSession;
+  message?: string;
+  error?: string;
+}
+
 function toHeadersInit(headers: Record<string, any>): Headers {
   const result = new Headers();
   for (const [key, value] of Object.entries(headers)) {
@@ -33,7 +60,7 @@ router.post('/register', async (req, res) => {
       }),
     });
 
-    const signUpResult = await signUpResponse.json();
+    const signUpResult = await signUpResponse.json() as BetterAuthSignUpResponse;
     console.log('Better Auth sign-up response:', signUpResponse.status, signUpResult);
 
     if (!signUpResponse.ok) {
@@ -80,7 +107,7 @@ router.post('/login', async (req, res) => {
       body: JSON.stringify({ email, password, rememberMe }),
     });
 
-    const signInResult = await signInResponse.json();
+    const signInResult = await signInResponse.json() as BetterAuthSignInResponse;
 
     if (!signInResponse.ok) {
       return res.status(signInResponse.status).json({ 
