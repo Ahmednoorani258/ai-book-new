@@ -1,16 +1,15 @@
 import React from 'react';
-import { useAuth } from '../contexts/AuthContext'; // Adjust path as necessary
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
-const PersonalizedContent = ({ experienceLevel, children }) => {
+const PersonalizedContentInner = ({ experienceLevel, children }) => {
+  const { useAuth } = require('../contexts/AuthContext');
   const { user, loading } = useAuth();
 
   if (loading) {
-    return null; // Or a loading spinner
+    return null;
   }
 
-  // If user is null (not logged in or session expired) and content is for anonymous
-  // Or if user is logged in and experienceLevel matches
-  if (!user && experienceLevel === 'anonymous') { // Assuming 'anonymous' is a valid experienceLevel for this component
+  if (!user && experienceLevel === 'anonymous') {
     return <>{children}</>;
   }
 
@@ -18,6 +17,14 @@ const PersonalizedContent = ({ experienceLevel, children }) => {
     return <>{children}</>;
   }
   return null;
+};
+
+const PersonalizedContent = ({ experienceLevel, children }) => {
+  return (
+    <BrowserOnly fallback={null}>
+      {() => <PersonalizedContentInner experienceLevel={experienceLevel}>{children}</PersonalizedContentInner>}
+    </BrowserOnly>
+  );
 };
 
 export default PersonalizedContent;

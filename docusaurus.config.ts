@@ -50,6 +50,24 @@ const config: Config = {
     ],
   ],
 
+  plugins: [
+    function provideReactPlugin(context, options) {
+      return {
+        name: 'provide-react-plugin',
+        configureWebpack(config, isServer) {
+          const webpack = require('webpack');
+          return {
+            plugins: [
+              new webpack.ProvidePlugin({
+                React: 'react',
+              }),
+            ],
+          };
+        },
+      };
+    },
+  ],
+
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',

@@ -1,12 +1,14 @@
 import React from 'react';
 import Layout from '@theme/Layout';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import LoginForm from '../components/LoginForm';
-import { useAuth } from '../contexts/AuthContext'; // Import useAuth
-import { useHistory } from '@docusaurus/router'; // Import useNavigate for redirection
 
-function Login() {
-  const { login } = useAuth(); // Get login function from context
-  const history = useHistory(); // Initialize useNavigate hook
+function LoginContent() {
+  const { useAuth } = require('../contexts/AuthContext');
+  const { useHistory } = require('@docusaurus/router');
+  
+  const { login } = useAuth();
+  const history = useHistory();
 
   const handleLogin = async ({ email, password }) => {
     // Client-side validation
@@ -20,9 +22,9 @@ function Login() {
     }
 
     try {
-      await login(email, password); // Use the login function from AuthContext
+      await login(email, password);
       alert('Login successful!');
-      history.push('/ai-book-new/'); // Redirect to home for now
+      history.push('/ai-book-new/');
     } catch (error) {
       alert(`Login failed: ${error.message}`);
       console.error('Login error:', error);
@@ -30,13 +32,21 @@ function Login() {
   };
 
   return (
+    <main className="auth-container">
+      <div className="auth-card">
+        <h1>Login</h1>
+        <LoginForm onLogin={handleLogin} />
+      </div>
+    </main>
+  );
+}
+
+function Login() {
+  return (
     <Layout title="Login" description="Login to access personalized content.">
-      <main className="auth-container">
-        <div className="auth-card">
-          <h1>Login</h1>
-          <LoginForm onLogin={handleLogin} />
-        </div>
-      </main>
+      <BrowserOnly fallback={<div>Loading...</div>}>
+        {() => <LoginContent />}
+      </BrowserOnly>
     </Layout>
   );
 }
