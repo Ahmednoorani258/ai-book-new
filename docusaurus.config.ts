@@ -28,7 +28,9 @@ const config: Config = {
     locales: ['en'],
   },
 
-  clientModules: [require.resolve('./src/client-modules/injectReact.js')],
+  clientModules: [
+    require.resolve('./src/client-modules/injectReact.js'),
+  ],
 
   presets: [
     [
@@ -63,6 +65,10 @@ const config: Config = {
           sidebarId: 'textbookSidebar',
           position: 'left',
           label: 'Textbook',
+        },
+        {
+          type: 'custom-auth',
+          position: 'right',
         },
         // TODO: Add link to GitHub repo when public
         // {

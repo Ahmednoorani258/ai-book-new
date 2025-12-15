@@ -27,3 +27,5 @@ venv/
 # Docusaurus Specific
 .docusaurus/
 .cache-loader/
+.gemini/
+gha-creds-*.json

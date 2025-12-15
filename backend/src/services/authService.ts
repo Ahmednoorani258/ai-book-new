@@ -1,28 +1,11 @@
-import { auth } from '../auth';
+// import { auth } from '../auth'; // This import is no longer needed in AuthService
 // import { User } from '../models/User'; // User model is a placeholder for Better Auth's internal user
 import { Profile } from '../models/Profile';
 import pool from '../db';
 
 export class AuthService {
-  async registerUserWithProfile(email: string, password: string, experienceLevel: Profile['experienceLevel']): Promise<{ userId: string }> {
-    try {
-      // In a real implementation, Better Auth would handle user creation and return a user ID.
-      // This is a simplified representation.
-      const newUser = await auth.providers.emailAndPassword.methods.register({ email, password });
-      const userId = newUser.id; // Assuming Better Auth returns an object with an ID
-
-      // Create profile entry in the database
-      await pool.query(
-        'INSERT INTO profiles(user_id, experience_level) VALUES($1, $2)',
-        [userId, experienceLevel]
-      );
-
-      return { userId };
-    } catch (error) {
-      console.error('Error registering user with profile:', error);
-      throw error;
-    }
-  }
+  // registerUserWithProfile method is removed as registration is now handled by Better Auth directly.
+  // Application-specific profile management will occur after Better Auth handles core user creation.
 
   async getUserProfile(userId: string): Promise<Profile | null> {
     try {
@@ -45,8 +28,8 @@ export class AuthService {
   async updateUserProfile(userId: string, experienceLevel: Profile['experienceLevel']): Promise<Profile | null> {
     try {
       const result = await pool.query(
-        'UPDATE profiles SET experience_level = $1 WHERE user_id = $2 RETURNING *',
-        [experienceLevel, userId]
+        'INSERT INTO profiles(user_id, experience_level) VALUES($1, $2) ON CONFLICT (user_id) DO UPDATE SET experience_level = EXCLUDED.experience_level RETURNING *',
+        [userId, experienceLevel]
       );
       if (result.rows.length > 0) {
         const row = result.rows[0];

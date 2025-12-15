@@ -2,29 +2,27 @@ import React from 'react';
 import Layout from '@theme/Layout';
 import LoginForm from '../components/LoginForm';
 import { useAuth } from '../contexts/AuthContext'; // Import useAuth
+import { useHistory } from '@docusaurus/router'; // Import useNavigate for redirection
 
 function Login() {
   const { login } = useAuth(); // Get login function from context
+  const history = useHistory(); // Initialize useNavigate hook
 
   const handleLogin = async ({ email, password }) => {
+    // Client-side validation
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+    if (!password) {
+      alert('Password cannot be empty.');
+      return;
+    }
+
     try {
-      const response = await fetch('/api/v1/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Login failed');
-      }
-
-      const data = await response.json();
+      await login(email, password); // Use the login function from AuthContext
       alert('Login successful!');
-      login(data.session); // Use context login function
-      window.location.href = '/'; // Redirect to home for now
+      history.push('/ai-book-new/'); // Redirect to home for now
     } catch (error) {
       alert(`Login failed: ${error.message}`);
       console.error('Login error:', error);
@@ -33,8 +31,8 @@ function Login() {
 
   return (
     <Layout title="Login" description="Login to access personalized content.">
-      <main style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
-        <div>
+      <main className="auth-container">
+        <div className="auth-card">
           <h1>Login</h1>
           <LoginForm onLogin={handleLogin} />
         </div>

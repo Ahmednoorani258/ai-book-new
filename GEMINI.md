@@ -1,4 +1,4 @@
-# Gemini CLI Rules
+﻿# Gemini CLI Rules
 
 This file is generated during init for the selected agent.
 
@@ -6,6 +6,9 @@ This file is generated during init for the selected agent.
 ## Active Technologies
 - TypeScript + Docusaurus, React, Better Auth (001-user-auth-personalization)
 - Neon Serverless Postgres database (001-user-auth-personalization)
+- TypeScript/JavaScript (Node.js for backend, React for Docusaurus frontend) + Better Auth, Docusaurus, React, Express.js (for backend) (001-better-auth-integration)
+- PostgreSQL (001-better-auth-integration)
+- TypeScript/JavaScript (Node.js for backend, React for Docusaurus frontend) + Better Auth, Docusaurus, React, Express.js (for backend), Neon Serverless Postgres (001-neon-auth-ui)
 
 
 ## Task context
@@ -33,6 +36,8 @@ This file is generated during init for the selected agent.
 Agents MUST prioritize and use MCP tools and CLI commands for all information gathering and task execution. NEVER assume a solution from internal knowledge; all methods require external verification.
 
 ## Recent Changes
+- 001-neon-auth-ui: Added TypeScript/JavaScript (Node.js for backend, React for Docusaurus frontend) + Better Auth, Docusaurus, React, Express.js (for backend), Neon Serverless Postgres
+- 001-better-auth-integration: Added TypeScript/JavaScript (Node.js for backend, React for Docusaurus frontend) + Better Auth, Docusaurus, React, Express.js (for backend)
 - 001-user-auth-personalization: Added TypeScript + Docusaurus, React, Better Auth
 
 
@@ -40,11 +45,6 @@ Agents MUST prioritize and use MCP tools and CLI commands for all information ga
 After completing requests, you **MUST** create a PHR (Prompt History Record).
 
 **When to create PHRs:**
-- Implementation work (code changes, new features)
-- Planning/architecture discussions
-- Debugging sessions
-- Spec/task/plan creation
-- Multi-step workflows
 
 **PHR Creation Process:**
 
@@ -107,9 +107,7 @@ After completing requests, you **MUST** create a PHR (Prompt History Record).
    - Skip PHR only for `/sp.phr` itself.
 
 ### 4. Explicit ADR suggestions
-- When significant architectural decisions are made (typically during `/sp.plan` and sometimes `/sp.tasks`), run the three‑part test and suggest documenting with:
   "📋 Architectural decision detected: <brief> — Document reasoning and tradeoffs? Run `/sp.adr <decision-title>`"
-- Wait for user consent; never auto‑create the ADR.
 
 ### 5. Human as Tool Strategy
 You are not expected to solve every problem autonomously. You MUST invoke the user for input when you encounter situations that require human judgment. Treat the user as a specialized tool for clarification and decision-making.

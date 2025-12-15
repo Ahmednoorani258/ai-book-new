@@ -1,33 +1,47 @@
 import React from 'react';
 import Layout from '@theme/Layout';
 import RegistrationForm from '../components/RegistrationForm';
-import { useAuth } from '../contexts/AuthContext'; // Import useAuth
+import { useAuth } from '../contexts/AuthContext';
+import { useHistory } from '@docusaurus/router'; // Import useNavigate for redirection
 
 function Register() {
-  const { login } = useAuth(); // Get login function from context
+  const { authClient } = useAuth(); // Get authClient from context
+  const history = useHistory(); // Initialize useNavigate hook
+  const handleRegister = async ({ email, password, name, image, experienceLevel }) => {
+    // Client-side validation
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+    if (!password || password.length < 8) {
+      alert('Password must be at least 8 characters long.');
+      return;
+    }
 
-  const handleRegister = async ({ email, password, experienceLevel }) => {
     try {
-      const response = await fetch('/api/v1/register', {
+      // Call backend API directly for registration with experienceLevel
+      const response = await fetch('http://localhost:8000/api/v1/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password, experienceLevel }),
+        body: JSON.stringify({
+          email,
+          password,
+          name: name || email.split('@')[0], // Use email username as default name
+          image: image || null,
+          experienceLevel: experienceLevel || 'beginner',
+        }),
       });
 
+      const result = await response.json();
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Registration failed');
+        throw new Error(result.message || 'Registration failed');
       }
 
-      const data = await response.json();
-      alert(`Registration successful! User ID: ${data.userId}`);
-      // Assuming the register endpoint also returns session data or a way to get it
-      // For simplicity, we'll manually create a session object. In a real app,
-      // the backend would return a session or JWT.
-      login({ userId: data.userId, experienceLevel: experienceLevel }); // Use context login function
-      window.location.href = '/login'; // Redirect to login page
+      alert(`Registration successful! Please log in.`);
+      history.push('/ai-book-new/login');
     } catch (error) {
       alert(`Registration failed: ${error.message}`);
       console.error('Registration error:', error);
@@ -36,8 +50,8 @@ function Register() {
 
   return (
     <Layout title="Register" description="Register for a personalized experience.">
-      <main style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
-        <div>
+      <main className="auth-container">
+        <div className="auth-card">
           <h1>Register</h1>
           <RegistrationForm onRegister={handleRegister} />
         </div>

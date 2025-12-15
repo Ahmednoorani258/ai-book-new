@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from '@docusaurus/Link'; // Import Link for redirection
 
 const LoginForm = ({ onLogin }) => {
   const [email, setEmail] = useState('');
@@ -11,7 +12,7 @@ const LoginForm = ({ onLogin }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
+      <div className="auth-form-group">
         <label htmlFor="email">Email:</label>
         <input
           type="email"
@@ -21,7 +22,7 @@ const LoginForm = ({ onLogin }) => {
           required
         />
       </div>
-      <div>
+      <div className="auth-form-group">
         <label htmlFor="password">Password:</label>
         <input
           type="password"
@@ -31,7 +32,10 @@ const LoginForm = ({ onLogin }) => {
           required
         />
       </div>
-      <button type="submit">Login</button>
+      <button type="submit" className="auth-submit-button">Login</button>
+      <div className="auth-link">
+        Don't have an account? <Link to="/register">Register</Link>
+      </div>
     </form>
   );
 };

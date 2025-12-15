@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from '@docusaurus/Link'; // Import Link for redirection
 
 const RegistrationForm = ({ onRegister }) => {
   const [email, setEmail] = useState('');
@@ -7,12 +8,13 @@ const RegistrationForm = ({ onRegister }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Assuming 'name' and 'image' are optional and might be added later
     onRegister({ email, password, experienceLevel });
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
+      <div className="auth-form-group">
         <label htmlFor="email">Email:</label>
         <input
           type="email"
@@ -22,7 +24,7 @@ const RegistrationForm = ({ onRegister }) => {
           required
         />
       </div>
-      <div>
+      <div className="auth-form-group">
         <label htmlFor="password">Password:</label>
         <input
           type="password"
@@ -32,19 +34,23 @@ const RegistrationForm = ({ onRegister }) => {
           required
         />
       </div>
-      <div>
+      <div className="auth-form-group">
         <label htmlFor="experienceLevel">Experience Level:</label>
         <select
           id="experienceLevel"
           value={experienceLevel}
           onChange={(e) => setExperienceLevel(e.target.value)}
+          className="auth-input-select"
         >
           <option value="beginner">Beginner</option>
           <option value="intermediate">Intermediate</option>
           <option value="expert">Expert</option>
         </select>
       </div>
-      <button type="submit">Register</button>
+      <button type="submit" className="auth-submit-button">Register</button>
+      <div className="auth-link">
+        Already have an account? <Link to="/login">Login</Link>
+      </div>
     </form>
   );
 };
