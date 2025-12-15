@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
         const { data, error } = await authClient.getSession();
         if (data?.user) {
           // Fetch user profile with experience level
-          const profileResponse = await fetch(`http://localhost:8000/api/v1/users/${data.user.id}/profile`);
+          const profileResponse = await fetch(`https://ai-book-new.onrender.com/api/v1/users/${data.user.id}/profile`);
           if (profileResponse.ok) {
             const profile = await profileResponse.json();
             setUser({ ...data.user, experienceLevel: profile.experienceLevel });
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
     if (data?.user) {
       // Fetch user profile
       try {
-        const profileResponse = await fetch(`http://localhost:8000/api/v1/users/${data.user.id}/profile`);
+        const profileResponse = await fetch(`https://ai-book-new.onrender.com/api/v1/users/${data.user.id}/profile`);
         if (profileResponse.ok) {
           const profile = await profileResponse.json();
           setUser({ ...data.user, experienceLevel: profile.experienceLevel });
