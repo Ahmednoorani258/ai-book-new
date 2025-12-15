@@ -1,6 +1,12 @@
 import React from 'react';
 import {MDXProvider} from '@mdx-js/react';
-import { AuthProvider } from '../contexts/AuthContext'; // Adjust path as necessary
+import BrowserOnly from '@docusaurus/BrowserOnly';
+import ChatWidget from '@site/src/components/ChatWidget';
+
+// Make React available globally for SSR
+if (typeof global !== 'undefined') {
+  global.React = React;
+}
 
 // Import your custom components
 import RobotDiagram from '@site/src/docusaurus-theme/components/RobotDiagram';
@@ -10,7 +16,7 @@ import GlossaryTerm from '@site/src/docusaurus-theme/components/GlossaryTerm';
 import Exercise from '@site/src/docusaurus-theme/components/Exercise';
 import LabTask from '@site/src/docusaurus-theme/components/LabTask';
 import CapstoneMilestone from '@site/src/docusaurus-theme/components/CapstoneMilestone';
-import ChatWidget from "../components/ChatWidget";
+
 const components = {
   RobotDiagram,
   WarningBlock,
@@ -23,10 +29,20 @@ const components = {
 
 export default function Root({children}) {
   return (
-    <AuthProvider>
-      <MDXProvider components={components}>
-        {children}
-      </MDXProvider>
-    </AuthProvider>
+    <>
+      <BrowserOnly fallback={<MDXProvider components={components}>{children}</MDXProvider>}>
+        {() => {
+          const { AuthProvider } = require('../contexts/AuthContext');
+          return (
+            <AuthProvider>
+              <MDXProvider components={components}>
+                {children}
+              </MDXProvider>
+            </AuthProvider>
+          );
+        }}
+      </BrowserOnly>
+      <ChatWidget />
+    </>
   );
 }

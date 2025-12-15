@@ -1,12 +1,15 @@
 import React from 'react';
 import Layout from '@theme/Layout';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import RegistrationForm from '../components/RegistrationForm';
-import { useAuth } from '../contexts/AuthContext';
-import { useHistory } from '@docusaurus/router'; // Import useNavigate for redirection
 
-function Register() {
-  const { authClient } = useAuth(); // Get authClient from context
-  const history = useHistory(); // Initialize useNavigate hook
+function RegisterContent() {
+  const { useAuth } = require('../contexts/AuthContext');
+  const { useHistory } = require('@docusaurus/router');
+  
+  const { authClient } = useAuth();
+  const history = useHistory();
+  
   const handleRegister = async ({ email, password, name, image, experienceLevel }) => {
     // Client-side validation
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -28,7 +31,7 @@ function Register() {
         body: JSON.stringify({
           email,
           password,
-          name: name || email.split('@')[0], // Use email username as default name
+          name: name || email.split('@')[0],
           image: image || null,
           experienceLevel: experienceLevel || 'beginner',
         }),
@@ -49,13 +52,21 @@ function Register() {
   };
 
   return (
+    <main className="auth-container">
+      <div className="auth-card">
+        <h1>Register</h1>
+        <RegistrationForm onRegister={handleRegister} />
+      </div>
+    </main>
+  );
+}
+
+function Register() {
+  return (
     <Layout title="Register" description="Register for a personalized experience.">
-      <main className="auth-container">
-        <div className="auth-card">
-          <h1>Register</h1>
-          <RegistrationForm onRegister={handleRegister} />
-        </div>
-      </main>
+      <BrowserOnly fallback={<div>Loading...</div>}>
+        {() => <RegisterContent />}
+      </BrowserOnly>
     </Layout>
   );
 }
