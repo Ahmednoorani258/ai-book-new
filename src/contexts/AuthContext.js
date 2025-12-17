@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { authClient } from '../lib/auth-client';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { authClient } from "../lib/auth-client";
 
 const AuthContext = createContext(null);
 
@@ -7,59 +7,76 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Load user session from Better Auth on first render
+  // ✅ Load session from Better Auth
   useEffect(() => {
-    const fetchSession = async () => {
+    const loadSession = async () => {
       try {
-        const { data, error } = await authClient.getSession();
+        const { data } = await authClient.getSession();
         if (data?.user) {
           // Fetch user profile with experience level
-          const profileResponse = await fetch(`https://ai-book-new.onrender.com/api/v1/users/${data.user.id}/profile`);
-          if (profileResponse.ok) {
-            const profile = await profileResponse.json();
-            setUser({ ...data.user, experienceLevel: profile.experienceLevel });
-          } else {
+          try {
+            const profileResponse = await fetch(`http://localhost:8000/api/v1/users/${data.user.id}/profile`);
+            if (profileResponse.ok) {
+              const profile = await profileResponse.json();
+              setUser({ ...data.user, experienceLevel: profile.experienceLevel });
+            } else {
+              setUser(data.user);
+            }
+          } catch (err) {
             setUser(data.user);
           }
         }
-      } catch (error) {
-        console.error('Error fetching session:', error);
+      } catch (err) {
+        console.error("Session error:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchSession();
+    loadSession();
   }, []);
 
+  // ✅ LOGIN
   const login = async (email, password) => {
     const { data, error } = await authClient.signIn.email({
       email,
       password,
     });
 
-    if (error) {
-      throw new Error(error.message || 'Login failed');
-    }
-
+    if (error) throw new Error(error.message);
+    
+    // Fetch user profile with experience level
     if (data?.user) {
-      // Fetch user profile
       try {
-        const profileResponse = await fetch(`https://ai-book-new.onrender.com/api/v1/users/${data.user.id}/profile`);
+        const profileResponse = await fetch(`http://localhost:8000/api/v1/users/${data.user.id}/profile`);
         if (profileResponse.ok) {
           const profile = await profileResponse.json();
-          setUser({ ...data.user, experienceLevel: profile.experienceLevel });
-        } else {
-          setUser(data.user);
+          const userWithProfile = { ...data.user, experienceLevel: profile.experienceLevel };
+          setUser(userWithProfile);
+          return userWithProfile;
         }
       } catch (err) {
-        setUser(data.user);
+        console.error('Profile fetch error:', err);
       }
     }
-
+    
+    setUser(data.user);
     return data.user;
   };
 
+  // ✅ REGISTER
+  const register = async ({ email, password, name }) => {
+    const { data, error } = await authClient.signUp.email({
+      email,
+      password,
+      name,
+    });
+
+    if (error) throw new Error(error.message);
+    return data.user;
+  };
+
+  // ✅ LOGOUT
   const logout = async () => {
     await authClient.signOut();
     setUser(null);
@@ -67,13 +84,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{
-        user,
-        loading,
-        login,
-        logout,
-        authClient, // Expose authClient for registration
-      }}
+      value={{ user, loading, login, register, logout }}
     >
       {children}
     </AuthContext.Provider>

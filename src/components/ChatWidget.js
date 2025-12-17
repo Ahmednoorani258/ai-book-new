@@ -19,7 +19,7 @@ export default function ChatWidget() {
     formData.append("query", newMessage.text);
 
     // const res = await fetch("https://ai-book-backend-4f6e.onrender.com/chat", {
-    const res = await fetch("http://127.0.0.1:8000/chat", {
+    const res = await fetch("https://ahmednoorani258-rag-book.hf.space/chat", {
       method: "POST",
       body: formData,
     });

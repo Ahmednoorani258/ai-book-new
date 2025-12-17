@@ -46,32 +46,34 @@ const authService = new AuthService();
 router.post('/register', async (req, res) => {
   const { email, password, name, image, experienceLevel } = req.body;
   try {
-    // Call Better Auth's sign-up endpoint internally
-    const signUpResponse = await fetch(`${process.env.BETTER_AUTH_URL}/api/auth/sign-up/email`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ 
-        email, 
-        password, 
-        name: name || email.split('@')[0],
-        image 
-      }),
+    // Use Better Auth API directly (no HTTP call needed)
+    const signUpData: any = {
+      email,
+      password,
+      name: name || email.split('@')[0]
+    };
+    
+    // Only include image if it's a non-empty string
+    if (image && typeof image === 'string') {
+      signUpData.image = image;
+    }
+    
+    // Call Better Auth's API method directly
+    const { data, error }: any = await auth.api.signUpEmail({
+      body: signUpData
     });
 
-    const signUpResult = await signUpResponse.json() as BetterAuthSignUpResponse;
-    console.log('Better Auth sign-up response:', signUpResponse.status, signUpResult);
+    console.log('Better Auth sign-up response:', data, error);
 
-    if (!signUpResponse.ok) {
-      console.error('Better Auth sign-up failed:', signUpResult);
-      return res.status(signUpResponse.status).json({ 
-        message: signUpResult.message || 'Registration failed', 
-        error: signUpResult.error || signUpResult.message
+    if (error) {
+      console.error('Better Auth sign-up failed:', error);
+      return res.status(400).json({ 
+        message: error.message || 'Registration failed', 
+        error: error.message
       });
     }
 
-    const userId = signUpResult?.user?.id;
+    const userId = data?.user?.id;
     console.log('User created with ID:', userId);
 
     if (!userId) {
@@ -87,7 +89,7 @@ router.post('/register', async (req, res) => {
       await authService.updateUserProfile(userId, experienceLevel);
     }
 
-    res.status(201).json({ userId, message: 'User registered successfully.' });
+    res.status(201).json({ userId, user: data.user, message: 'User registered successfully.' });
   } catch (error: any) {
     console.error('Registration error:', error);
     res.status(500).json({ message: 'Error registering user.', error: error.message });
@@ -98,40 +100,32 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   const { email, password, rememberMe } = req.body;
   try {
-    // Call Better Auth's sign-in endpoint internally
-    const signInResponse = await fetch(`${process.env.BETTER_AUTH_URL}/api/auth/sign-in/email`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password, rememberMe }),
+    // Use Better Auth API directly (no HTTP call needed)
+    const { data, error }: any = await auth.api.signInEmail({
+      body: {
+        email,
+        password,
+        rememberMe
+      }
     });
 
-    const signInResult = await signInResponse.json() as BetterAuthSignInResponse;
-
-    if (!signInResponse.ok) {
-      return res.status(signInResponse.status).json({ 
-        message: signInResult.message || 'Login failed', 
-        error: signInResult.error 
+    if (error) {
+      return res.status(400).json({ 
+        message: error.message || 'Login failed', 
+        error: error.message 
       });
     }
 
-    const userId = signInResult?.user?.id;
+    const userId = data?.user?.id;
     let profile = null;
     if (userId) {
       profile = await authService.getUserProfile(userId);
     }
 
-    // Forward Set-Cookie headers from Better Auth
-    const setCookieHeaders = signInResponse.headers.get('set-cookie');
-    if (setCookieHeaders) {
-      res.setHeader('Set-Cookie', setCookieHeaders);
-    }
-
     res.status(200).json({
       message: 'Logged in successfully.',
-      session: { ...signInResult?.session, userId, experienceLevel: profile?.experienceLevel },
-      user: signInResult?.user
+      session: { ...data?.session, userId, experienceLevel: profile?.experienceLevel },
+      user: data?.user
     });
   } catch (error: any) {
     console.error('Login error:', error);
