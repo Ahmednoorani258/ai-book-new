@@ -22,7 +22,7 @@ function RegisterContent() {
       // If experienceLevel is provided, update profile via backend
       if (experienceLevel) {
         try {
-          const response = await fetch('http://localhost:8000/api/v1/register', {
+          const response = await fetch('https://ai-book-new.onrender.com/api/v1/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
